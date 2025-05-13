@@ -32,17 +32,17 @@ Contact: +225 07 471 612 21
         <section class="bg-primary" style="height: 100vh;">
             <div class="container d-flex flex-column flex-center h-100">
                 <div class="row w-75">
-                    <div class="col-md-5 bg-lightgrey"></div>
-                    <div class="col-md-7 d-flex flex-column justofy-content- bg-light">
-                        <img class="theme-light-show mx-auto mw-100 w-150px w-lg-300px mb-10 mb-lg-20" src="{{asset('assets/media/logos/sia.png')}}" alt=""/>
+                    <div class="col-md-5 bg-lightgrey" style="background: #c3c3c3 url({{asset('assets/media/bg/auth-screens.png')}}) center / contain no-repeat;"></div>
+                    <div class="col-md-7 d-flex flex-column justofy-content- bg-light p-3 p-md-5">
+                        <img class="theme-light-show mx-auto mw-100 w-150px w-lg-300px mb-3 mb-lg-5" src="{{asset('assets/media/logos/logo.png')}}" alt=""/>
                         <!--begin::Form-->
                         <form
-                            class="form p-4" novalidate="novalidate" id="kt_sign_in_form" data-kt-redirect-url="" action="#" method="POST">
+                            class="form" novalidate="novalidate" id="kt_sign_in_form" data-kt-redirect-url="" action="#" method="POST">
                             <!--begin::Heading-->
                             <div
-                                class="text-center mb-11">
+                                class="mb-4">
                                 <!--begin::Title-->
-                                <h1 class="text-gray-900 fw-bolder mb-3">
+                                <h1 class="text-gray-900 fs-4">
                                     Connexion
                                 </h1>
                                 <!--end::Title-->
@@ -55,19 +55,21 @@ Contact: +225 07 471 612 21
 
                             <!--begin::Input group-->
                             <div
-                                class="fv-row mb-8">
+                                class="fv-row mb-2">
+                                <label class="form-label">Email</label>
                                 <!--begin::Email-->
                                 <input
-                                type="text" placeholder="Email" name="_username" autocomplete="off" class="form-control bg-transparent" value="{{ last_username }}"/>
+                                type="text" placeholder="" name="_username" autocomplete="off" class="form-control" value="{{ last_username }}"/>
                             <!--end::Email-->
                             </div>
 
                             <!--end::Input group-->
                             <div
-                                class="fv-row mb-3">
+                                class="fv-row mb-2">
+                                <label class="form-label">Mot de passe</label>
                                 <!--begin::Password-->
                                 <input
-                                type="password" placeholder="Mot de passe" name="_password" autocomplete="off" class="form-control bg-transparent"/>
+                                type="password" placeholder="" name="_password" autocomplete="off" class="form-control"/>
                             <!--end::Password-->
                             </div>
                             <!--end::Input group-->
@@ -76,7 +78,7 @@ Contact: +225 07 471 612 21
                             type="hidden" name="_csrf_token" value="{{ csrf_token('authenticate') }}">
 
                             <!--begin::Wrapper-->
-                            <div class="d-flex flex-stack flex-wrap gap-3 fs-base fw-semibold mb-8">
+                            <div class="d-flex justify-content-between flex-wrap gap-3 fs-base fw-semibold mb-3">
                                 <div class="form-check form-check-custom form-check-info form-check-solid form-check-sm">
                                     <input class="form-check-input" type="checkbox" name="_remember_me" id="_remember_me">
                                     <label class="form-check-label" for="_remember_me">Rester connecté</label>
@@ -91,9 +93,9 @@ Contact: +225 07 471 612 21
                             <!--end::Wrapper-->
 
                             <!--begin::Submit button-->
-                            <div class="d-grid mb-10">
+                            <div class="d-grid mb-5">
                                 <button
-                                    type="submit" id="kt_sign_in_submit" class="btn btn-primary">
+                                    type="submit" id="kt_sign_in_submit" class="btn btn-primary py-2">
 
                                     <!--begin::Indicator label-->
                                     <span class="indicator-label">
