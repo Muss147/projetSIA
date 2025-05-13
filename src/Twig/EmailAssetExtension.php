@@ -28,7 +28,7 @@ class EmailAssetExtension extends AbstractExtension
     public function getEmailAsset(string $path): string
     {
         return $this->urlGenerator->generate(
-            'quick_start', [], // ou n'importe quelle route valide
+            'dashboard', [], // ou n'importe quelle route valide
             UrlGeneratorInterface::ABSOLUTE_URL
         ) . ltrim($this->packages->getUrl($path), '/');
     }
