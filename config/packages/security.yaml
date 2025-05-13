@@ -14,7 +14,7 @@ security:
             pattern: ^/(_(profiler|wdt)|css|images|js)/
             security: false
         main:
-            pattern: /
+            pattern: ^/
             lazy: true
             provider: main_provid
             form_login:
