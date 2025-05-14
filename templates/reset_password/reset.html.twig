@@ -69,7 +69,7 @@ Contact: +225 07 471 612 21
                                 <!--begin::Wrapper-->
                                 <div
                                     class="mb-1">
-                                    <label class="fs-6 mb-2">Nouveau mot de passe</label>
+                                    <label class="fs-6 mb-2" for="change_password_form_plainPassword_first">Nouveau mot de passe</label>
                                     <!--begin::Input wrapper-->
                                     <div class="position-relative mb-3">
                                         {{ form_widget(resetForm.plainPassword.first, {'attr': {'class': 'form-control bg-transparent', 'placeholder': '', 'autocomplete': 'off'}}) }}
@@ -82,11 +82,8 @@ Contact: +225 07 471 612 21
                                     <!--end::Input wrapper-->
 
                                     <!--begin::Meter-->
-                                    <div class="d-flex align-items-center mb-3" data-kt-password-meter-control="highlight">
-                                        <div class="flex-grow-1 bg-secondary bg-active-success rounded h-5px me-2"></div>
-                                        <div class="flex-grow-1 bg-secondary bg-active-success rounded h-5px me-2"></div>
-                                        <div class="flex-grow-1 bg-secondary bg-active-success rounded h-5px me-2"></div>
-                                        <div class="flex-grow-1 bg-secondary bg-active-success rounded h-5px"></div>
+                                    <div id="password-strength-bar" class="progress mt-2" style="height: 6px;">
+                                        <div class="progress-bar" role="progressbar" style="width: 0%;"></div>
                                     </div>
                                     <!--end::Meter-->
                                 </div>
@@ -103,7 +100,7 @@ Contact: +225 07 471 612 21
                             <!--end::Input group-->
                             <div
                                 class="fv-row mb-4">
-                                <label class="fs-6 mb-2">Confirmer le mot de passe</label>
+                                <label class="fs-6 mb-2" for="change_password_form_plainPassword_second">Confirmer le mot de passe</label>
                                 <!--begin::Repeat Password-->
                                 {{ form_widget(resetForm.plainPassword.second, {'attr': {'class': 'form-control bg-transparent', 'placeholder': '', 'autocomplete': 'off'}}) }}
                             <!--end::Repeat Password-->
@@ -137,5 +134,10 @@ Contact: +225 07 471 612 21
         </section>
         
         <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.6/dist/js/bootstrap.bundle.min.js" integrity="sha384-j1CDi7MgGQ12Z7Qab0qlWQ/Qqz24Gc6BM0thvEMVjHnfYGF0rmFCozFSxQBxwHKO" crossorigin="anonymous"></script>
+        <!-- JustValidate core JS -->
+        <script src="https://cdn.jsdelivr.net/npm/just-validate@4.2.0/dist/just-validate.production.min.js"></script>
+        <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+
+		<script src="{{asset('assets/js/custom/authentication/reset-password/new-password.js')}}"></script>
     </body>
 </html>
