@@ -106,7 +106,20 @@ final class UsersController extends AbstractController
         ]);
     }
 
-    #[Route('/{user}/details', name: 'details_user', methods: ['GET', 'POST'])]
+    #[Route('/{user}/apercu', name: 'details_overview')]
+    public function detailOverview(Request $request, Users $user, SessionInterface $session): Response
+    {
+        // Définition du menu actif
+        $session->set('menu', 'users_manage');
+        $session->set('subMenu', 'users');
+        $session->set('userMenu', 'overview');
+
+        return $this->render('users/details_overview.html.twig', [
+            'user' => $user
+        ]);
+    }
+
+    #[Route('/{user}/modification', name: 'details_setting', methods: ['GET', 'POST'])]
     public function edit(Request $request, Users $user, EntityManagerInterface $entityManager, SessionInterface $session, UserPasswordHasherInterface $passwordHasher): Response
     {
         $session->set('profilNav', 'edit');

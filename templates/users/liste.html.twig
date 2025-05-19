@@ -493,7 +493,7 @@
 											class="d-flex align-items-center">
 											<!--begin:: Avatar -->
 											<div class="symbol symbol-circle symbol-50px overflow-hidden me-3">
-												<a href="{{ path('details_user', {'user': user.id}) }}">
+												<a href="{{ path('details_overview', {'user': user.id}) }}">
 													{% if user.avatar %}
 														<div class="symbol-label">
 															<img src="{{asset(user.avatar.filename)}}" alt="{{user.nomComplet}}" class="w-100"/>
@@ -508,7 +508,7 @@
 											<!--end::Avatar-->
 											<!--begin::User details-->
 											<div class="d-flex flex-column">
-												<a href="{{ path('details_user', {'user': user.id}) }}" class="text-gray-800 text-hover-primary mb-1">{{user.nomComplet}}</a>
+												<a href="{{ path('details_overview', {'user': user.id}) }}" class="text-gray-800 text-hover-primary mb-1">{{user.nomComplet}}</a>
 												<span>{{user.email}}</span>
 											</div>
 											<!--begin::User details-->
@@ -541,7 +541,7 @@
 												class="menu menu-sub menu-sub-dropdown menu-column menu-rounded menu-gray-600 menu-state-bg-light-primary fw-semibold fs-7 w-125px py-4" data-kt-menu="true">
 												<!--begin::Menu item-->
 												<div class="menu-item px-3">
-													<a href="{{ path('details_user', {'user': user.id}) }}" class="menu-link px-3">
+													<a href="{{ path('details_overview', {'user': user.id}) }}" class="menu-link px-3">
 														Modifier
 													</a>
 												</div>
@@ -550,7 +550,7 @@
 												{% if not user.isActivated %}
 													<!--begin::Menu item-->
 													<div class="menu-item px-3">
-														<a href="{{ path('details_user', {'user': user.id}) }}" class="menu-link px-3">
+														<a href="{{ path('details_overview', {'user': user.id}) }}" class="menu-link px-3">
 															Activation...
 														</a>
 													</div>
