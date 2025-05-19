@@ -64,7 +64,7 @@ final class RolesController extends AbstractController
             return $this->redirectToRoute('liste_roles');
         }
 
-        return $this->render('admin/roles/liste.html.twig', [
+        return $this->render('roles/liste.html.twig', [
             'roles' => $rolesRepository->findAll(),
             'new_form' => $form
         ]);
@@ -92,7 +92,7 @@ final class RolesController extends AbstractController
             return $this->redirectToRoute('details_role', ['role' => $role->getId()]);
         }
 
-        return $this->render('admin/roles/details.html.twig', [
+        return $this->render('roles/details.html.twig', [
             'role' => $role,
             'edit_form' => $form
         ]);

@@ -2,7 +2,7 @@
 
 {% block title %}Permissions{% endblock %}
 
-{% block stylesheey %}
+{% block stylesheets %}
 <link href="{{asset('assets/plugins/custom/datatables/datatables.bundle.css')}}" rel="stylesheet" type="text/css"/>
 {% endblock %}
 
@@ -16,56 +16,57 @@
 
 			<!--begin::Toolbar container-->
 			<div
-				id="kt_app_toolbar_container" class="app-container  container-xxl d-flex flex-stack ">
-
-
-				<!--begin::Page title-->
-				<div
-					class="page-title d-flex flex-column justify-content-center flex-wrap me-3 ">
-					<!--begin::Title-->
-					<h1 class="page-heading d-flex text-gray-900 fw-bold fs-3 flex-column justify-content-center my-0">
-						Permissions
-					</h1>
-					<!--end::Title-->
-
-
-					<!--begin::Breadcrumb-->
-					<ul
-						class="breadcrumb breadcrumb-separatorless fw-semibold fs-7 my-0 pt-1">
-						<!--begin::Item-->
-						<li class="breadcrumb-item text-muted">
-							<a href="{{path('dashboard')}}" class="text-muted text-hover-primary">
-								Accueil
-							</a>
-						</li>
-						<!--end::Item-->
-						<!--begin::Item-->
-						<li class="breadcrumb-item">
-							<span class="bullet bg-gray-500 w-5px h-2px"></span>
-						</li>
-						<!--end::Item-->
-
-						<!--begin::Item-->
-						<li class="breadcrumb-item text-muted">
-							Gestion d'utilisateurs
-						</li>
-						<!--end::Item-->
-
-						<!--begin::Item-->
-						<li class="breadcrumb-item">
-							<span class="bullet bg-gray-200 w-5px h-2px"></span>
-						</li>
-						<!--end::Item-->
-
-						<!--begin::Item-->
-						<li class="breadcrumb-item text-gray-900">
+				id="kt_app_toolbar_container" class="app-container container-xxl">
+				
+				<div class="bg-primary-o h-150px rounded d-flex flex-stack p-5 p-md-10">
+					<!--begin::Page title-->
+					<div
+						class="page-title d-flex flex-column justify-content-center flex-wrap me-3 ">
+						<!--begin::Title-->
+						<h1 class="page-heading d-flex text-gray-100 fw-bold fs-3 flex-column justify-content-center my-0">
 							Permissions
-						</li>
-						<!--end::Item-->
-					</ul>
-					<!--end::Breadcrumb-->
+						</h1>
+						<!--end::Title-->
+
+
+						<!--begin::Breadcrumb-->
+						<ul
+							class="breadcrumb breadcrumb-separatorless fw-semibold fs-7 my-0 pt-1">
+							<!--begin::Item-->
+							<li class="breadcrumb-item text-muted">
+								<a href="{{path('dashboard')}}" class="text-muted text-hover-primary">
+									Accueil
+								</a>
+							</li>
+							<!--end::Item-->
+							<!--begin::Item-->
+							<li class="breadcrumb-item">
+								<span class="bullet bg-gray-500 w-5px h-2px"></span>
+							</li>
+							<!--end::Item-->
+
+							<!--begin::Item-->
+							<li class="breadcrumb-item text-muted">
+								Gestion d'utilisateurs
+							</li>
+							<!--end::Item-->
+
+							<!--begin::Item-->
+							<li class="breadcrumb-item">
+								<span class="bullet bg-gray-200 w-5px h-2px"></span>
+							</li>
+							<!--end::Item-->
+
+							<!--begin::Item-->
+							<li class="breadcrumb-item text-gray-900">
+								Permissions
+							</li>
+							<!--end::Item-->
+						</ul>
+						<!--end::Breadcrumb-->
+					</div>
+					<!--end::Page title-->
 				</div>
-				<!--end::Page title-->
 			</div>
 			<!--end::Toolbar container-->
 		</div>
@@ -357,7 +358,7 @@
 
 											<div class="fs-6 text-gray-700 ">
 												<strong class="me-1">Attention !</strong>
-												En modifiant le nom de l'autorisation, vous risquez d'interrompre la fonctionnalité des autorisations du système. Veuillez vous assurer que vous êtes absolument certain avant de procéder.</div>
+												En modifiant les paramètres de la permission, vous risquez d'interrompre la fonctionnalité des autorisations du système. Veuillez vous assurer que vous êtes absolument certain avant de continuer.</div>
 										</div>
 										<!--end::Content-->
 
@@ -465,7 +466,7 @@
 	</div>
 {% endblock %}
 
-{% block scripts %}
+{% block javascripts %}
 <script src="{{asset('assets/plugins/custom/datatables/datatables.bundle.js')}}"></script>
 <script src="{{asset('assets/plugins/custom/formrepeater/formrepeater.bundle.js')}}"></script>
 

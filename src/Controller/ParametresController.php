@@ -38,7 +38,7 @@ final class ParametresController extends AbstractController
             $this->addFlash('success', 'Ajout effectuée avec succès.');
             return $this->redirectToRoute('liste_categories');
         }
-        return $this->render('admin/parametres/categories.html.twig', [
+        return $this->render('parametres/categories.html.twig', [
             'categories' => $categories,
             'new_categ' => $formCategorie
         ]);
@@ -73,7 +73,7 @@ final class ParametresController extends AbstractController
         $session->set('menu', 'parametres');
         $session->set('subMenu', '');
         $parametres = $entityManager->getRepository(Parametres::class)->findAll();
-        return $this->render('admin/parametres/index.html.twig', [
+        return $this->render('parametres/index.html.twig', [
             'parametres' => $parametres,
         ]);
     }
