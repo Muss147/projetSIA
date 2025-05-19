@@ -48,7 +48,7 @@
                         <!--end::Card title-->
 
                         <!--begin::Action-->
-                        <a href="{{path('details_setting', {user: user.id})}}" class="btn btn-sm btn-primary align-self-center">Modifier le profil</a>
+                        <a href="{{path('user_setting', {user: user.id})}}" class="btn btn-sm btn-primary align-self-center">Modifier le profil</a>
                         <!--end::Action-->
                     </div>
                     <!--begin::Card header-->
@@ -90,7 +90,7 @@
                             {% if user.activated %}
                             <!--begin::Col-->
                             <div class="col-lg-8 d-flex align-items-center">
-                                <span class="fw-bold fs-6 text-gray-800 me-2">044 3276 454 935</span>
+                                <span class="fw-bold fs-6 text-gray-800 me-2">{{user.email}}</span>
                                 <span class="badge badge-success">Verifié</span>
                             </div>
                             <!--end::Col-->
@@ -148,7 +148,7 @@
                                     <h4 class="text-gray-900 fw-bold">Votre attention est requise !</h4>
 
                                     <div class="fs-6 text-gray-700 ">Ce profil est bloqué pour une raison quelconque, veuillez cliquer pour 
-                                        <a class="fw-bold" href="{{path('details_setting', {user: user.id})}}">modifier le profil</a>.</div>
+                                        <a class="fw-bold" href="{{path('user_setting', {user: user.id})}}">modifier le profil</a>.</div>
                                 </div>
                                 <!--end::Content-->
 
@@ -171,5 +171,4 @@
 
 {% block javascripts %}
 	<script src="{{asset('assets/plugins/custom/datatables/datatables.bundle.js')}}"></script>
-    <script src="{{asset('assets/js/custom/pages/user-profile/general.js')}}"></script>
 {% endblock %}

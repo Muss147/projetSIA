@@ -1,8 +1,10 @@
 {% extends "layout.html.twig" %}
 
-{% block title %}{% endblock %}
+{% block title %}Logs{% endblock %}
 
-{% block stylesheets %}{% endblock %}
+{% block stylesheets %}
+	<link href="{{asset('assets/plugins/custom/datatables/datatables.bundle.css')}}" rel="stylesheet" type="text/css"/>
+{% endblock %}
 
 {% block body %}
 	<div
@@ -18,7 +20,7 @@
 				id="kt_app_content_container" class="app-container  container-xxl ">
 
 				<!--begin::Navbar-->
-                {% include "_details_navbar.html.twig" %}
+                {% include "users/_details_navbar.html.twig" %}
 				<!--end::Navbar-->
 
 				<!--begin::Login sessions-->
@@ -434,4 +436,7 @@
 	</div>
 {% endblock %}
 
-{% block javascripts %}{% endblock %}
+{% block javascripts %}
+	<script src="{{asset('assets/plugins/custom/datatables/datatables.bundle.js')}}"></script>
+	<script src="{{asset('assets/js/custom/account/api-keys/api-keys.js')}}"></script>
+{% endblock %}

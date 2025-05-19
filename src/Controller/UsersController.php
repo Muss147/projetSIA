@@ -106,7 +106,7 @@ final class UsersController extends AbstractController
         ]);
     }
 
-    #[Route('/{user}/apercu', name: 'details_overview')]
+    #[Route('/{user}/resume', name: 'user_resume')]
     public function detailOverview(Request $request, Users $user, SessionInterface $session): Response
     {
         // Définition du menu actif
@@ -119,10 +119,14 @@ final class UsersController extends AbstractController
         ]);
     }
 
-    #[Route('/{user}/modification', name: 'details_setting', methods: ['GET', 'POST'])]
+    #[Route('/{user}/modification', name: 'user_setting', methods: ['GET', 'POST'])]
     public function edit(Request $request, Users $user, EntityManagerInterface $entityManager, SessionInterface $session, UserPasswordHasherInterface $passwordHasher): Response
     {
-        $session->set('profilNav', 'edit');
+        // Définition du menu actif
+        $session->set('menu', 'users_manage');
+        $session->set('subMenu', 'users');
+        $session->set('userMenu', 'setting');
+
         $form_edit = $this->createForm(UsersType::class, $user, ['form_type' => 'edit']);
         $form_change_email = $this->createForm(UsersType::class, $user, ['form_type' => 'change_email']);
         $form_reset_password = $this->createForm(UsersType::class, new Users(), ['form_type' => 'reset_password']);
@@ -196,7 +200,7 @@ final class UsersController extends AbstractController
             return $this->redirectToRoute('users_edit', ['id' => $user->getId()], Response::HTTP_SEE_OTHER);
         }
 
-        return $this->render('users/profil_edit.html.twig', [
+        return $this->render('users/details_setting.html.twig', [
             'user' => $user,
             'form_edit' => $form_edit,
             'form_change_email' => $form_change_email,
@@ -205,7 +209,16 @@ final class UsersController extends AbstractController
         ]);
     }
 
-    #[Route('/{user}/delete', name: 'delete_user', methods: ['POST'])]
+    #[Route('/{user}/logs', name: 'user_logs', methods: ['GET'])]
+    public function logs(Users $user, SessionInterface $session): Response
+    {
+        $session->set('profilNav', 'logs');
+        return $this->render('users/details_logs.html.twig', [
+            'user' => $user,
+        ]);
+    }
+
+    #[Route('/{user}/delete', name: 'user_delete', methods: ['POST'])]
     public function delete(Request $request, Users $user, EntityManagerInterface $em): Response
     {
         if ($this->isCsrfTokenValid('delete'.$user->getId(), $request->getPayload()->getString('_token'))) {
