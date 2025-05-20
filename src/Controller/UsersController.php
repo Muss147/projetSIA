@@ -143,7 +143,7 @@ final class UsersController extends AbstractController
             $entityManager->flush();
             
             $this->addFlash('success', 'Les informations ont été mises à jour avec succès.');
-            return $this->redirectToRoute('users_edit', ['id' => $user->getId()], Response::HTTP_SEE_OTHER);
+            return $this->redirectToRoute('user_setting', ['user' => $user->getId()], Response::HTTP_SEE_OTHER);
         }
         if ($form_change_email->isSubmitted() && $form_change_email->isValid()) {
             // Vérification du mot de passe actuel
@@ -165,7 +165,7 @@ final class UsersController extends AbstractController
                     $this->addFlash('success', 'L\'adresse email a été mis à jour avec succès.');
                 }
             }
-            return $this->redirectToRoute('users_edit', ['id' => $user->getId()], Response::HTTP_SEE_OTHER);
+            return $this->redirectToRoute('user_setting', ['user' => $user->getId()], Response::HTTP_SEE_OTHER);
         }
         if ($form_reset_password->isSubmitted() && $form_reset_password->isValid()) {
             // Vérification du mot de passe actuel
@@ -188,7 +188,7 @@ final class UsersController extends AbstractController
                     $this->addFlash('success', 'Le mot de passe a été mis à jour avec succès.');
                 }
             }
-            return $this->redirectToRoute('users_edit', ['id' => $user->getId()], Response::HTTP_SEE_OTHER);
+            return $this->redirectToRoute('user_setting', ['user' => $user->getId()], Response::HTTP_SEE_OTHER);
         }
         // if ($form_deactivate->isSubmitted() && $form_deactivate->isValid()) {
         if ($request->isMethod('POST')) {
@@ -197,7 +197,7 @@ final class UsersController extends AbstractController
             $entityManager->flush();
             
             $this->addFlash('success', 'L\utilisateur a été désactivé.');
-            return $this->redirectToRoute('users_edit', ['id' => $user->getId()], Response::HTTP_SEE_OTHER);
+            return $this->redirectToRoute('user_setting', ['user' => $user->getId()], Response::HTTP_SEE_OTHER);
         }
 
         return $this->render('users/details_setting.html.twig', [
@@ -212,7 +212,11 @@ final class UsersController extends AbstractController
     #[Route('/{user}/logs', name: 'user_logs', methods: ['GET'])]
     public function logs(Users $user, SessionInterface $session): Response
     {
-        $session->set('profilNav', 'logs');
+        // Définition du menu actif
+        $session->set('menu', 'users_manage');
+        $session->set('subMenu', 'users');
+        $session->set('userMenu', 'logs');
+
         return $this->render('users/details_logs.html.twig', [
             'user' => $user,
         ]);
@@ -228,7 +232,7 @@ final class UsersController extends AbstractController
         return $this->redirectToRoute('liste_users', [], Response::HTTP_SEE_OTHER);
     }
 
-    #[Route('/delete-users-selected', name: 'delete_users_selected', methods: ['POST'])]
+    #[Route('/delete-users-selected', name: 'users_selected_delete', methods: ['POST'])]
     public function deleteUsersSelected(Request $request, EntityManagerInterface $em, UsersRepository $usersRepository): Response
     {
         // Récupérer les données JSON de la requête

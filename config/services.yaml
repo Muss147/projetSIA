@@ -25,8 +25,15 @@ services:
     # please note that last definitions always *replace* previous ones
 
     App\EventListener\LoginListener:
+        arguments:
+            $em: '@doctrine.orm.entity_manager'
+            $requestStack: '@request_stack'
+            $ipLocationService: '@App\Service\IpLocationService'
+            $security: '@security.helper'
         tags:
             - { name: 'kernel.event_listener', event: 'security.interactive_login', method: 'onSecurityInteractiveLogin' }
+            - { name: 'kernel.event_listener', event: 'Symfony\Component\Security\Http\Event\LoginSuccessEvent', method: 'onLoginSuccess' }
+            - { name: 'kernel.event_listener', event: 'Symfony\Component\Security\Http\Event\LoginFailureEvent', method: 'onLoginFailure' }
     
     App\EventSubscriber\SlugSubscriber:
         tags:
@@ -47,3 +54,6 @@ services:
                 videos: 52428800  # 50MB
                 documents: 10485760 # 10MB
     
+    App\Service\IpLocationService: ~
+
+    App\EventSubscriber\ActivityLoggerSubscriber: ~

@@ -141,7 +141,7 @@
 										{% for autoris in permission.autorisations %}<a href="" class="badge badge-light-primary fs-7 m-1">{{autoris.role.libelle}}</a>{% endfor %}
 									</td>
 									<td>
-										24 Jun 2025, 8:43 pm
+										{{permission.createdAt|date('d M Y, H:m')}}
 									</td>
 									<td class="text-end">
 										<button class="btn btn-icon btn-active-light-primary w-30px h-30px me-3" data-bs-toggle="modal" data-bs-target="#kt_modal_update_permission" data-bs-ident="{{permission.id}}">
