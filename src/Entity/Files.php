@@ -2,11 +2,12 @@
 
 namespace App\Entity;
 
-use App\Repository\FilesRepository;
+use App\Mapping\EntityBase;
 use Doctrine\ORM\Mapping as ORM;
+use App\Repository\FilesRepository;
 
 #[ORM\Entity(repositoryClass: FilesRepository::class)]
-class Files
+class Files extends EntityBase
 {
     #[ORM\Id]
     #[ORM\GeneratedValue]
@@ -25,6 +26,11 @@ class Files
     public function getId(): ?int
     {
         return $this->id;
+    }
+
+    public function getEntityLibelle(): ?string
+    {
+        return $this->filename;
     }
 
     public function getFilename(): ?string

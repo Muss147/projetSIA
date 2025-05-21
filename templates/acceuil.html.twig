@@ -1,0 +1,157 @@
+<!DOCTYPE html>
+<!--
+Author: Moussa Fofana
+Product Name: Le Passage Lumière
+Website: https://www.moussa-fofana.site
+Email: hello@moussa-fofana.com
+Contact: +225 07 471 612 21
+-->
+<html
+	lang="fr">
+	<!--begin::Head-->
+	<head>
+		<title>Acceuil | ERP SIA</title>
+		<meta charset="utf-8"/>
+        <meta name="author" content="Digit Communication : Moussa Fofana" />
+		<meta name="description" content=""/>
+		<meta name="keywords" content=""/>
+		<meta name="viewport" content="width=device-width, initial-scale=1"/>
+		
+        <link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 128 128%22><text y=%221.2em%22 font-size=%2296%22>⚫️</text><text y=%221.3em%22 x=%220.2em%22 font-size=%2276%22 fill=%22%23fff%22>sf</text></svg>">
+        
+		<!--begin::Fonts(mandatory for all pages)-->
+		<link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Inter:300,400,500,600,700"/>
+		<!--end::Fonts-->
+
+		<!--begin::Global Stylesheets Bundle(mandatory for all pages)-->
+		<link href="{{asset('assets/plugins/global/plugins.bundle.css')}}" rel="stylesheet" type="text/css"/> 
+        <link href="{{asset('assets/css/style.bundle.css')}}" rel="stylesheet" type="text/css"/>
+        <link href="{{asset('assets/css/style.custom.css')}}" rel="stylesheet" type="text/css"/>
+		<!--end::Global Stylesheets Bundle-->
+    </head>
+    <body>
+        <div
+            class="d-flex flex-column flex-root bg-primary-o" id="kt_app_root">
+            
+            <!--begin::Authentication - Signup Welcome Message -->
+            <div
+                class="d-flex flex-column flex-center flex-column-fluid">
+                <!--begin::Content-->
+                <div
+                    class="d-flex flex-row-fluid flex-wrap gap-10 flex-center p-10">
+                    <!--begin::Wrapper-->
+                    {% for bu in businessUnits %}
+                    <!--begin::Mixed Widget 9-->
+                    <a href="" class="card card-xl-stretch border-hover-primary mb-xl-8">
+                        <!--begin::Body-->
+                        <div class="card-body d-flex flex-column pb-10 pb-lg-15">
+                            <div class="flex-grow-1">
+                                <!--begin::Info-->
+                                <div class="d-flex align-items-center pe-2 mb-5">
+                                    <span class="text-muted fw-bold fs-5 flex-grow-1">
+                                        Modifié {{bu.updatedAt|time_ago}}
+                                    </span>
+                                    
+                                    <div class="symbol symbol-50px">
+                                        <span class="symbol-label bg-light">
+                                            <i class="ki-duotone ki-abstract-{{random(['39', '26', '46', '2', '24'])}} fs-1">
+                                                <span class="path1"></span>
+                                                <span class="path2"></span>
+                                            </i>
+                                            {# <img src="/metronic8/demo1/assets/media/svg/brand-logos/plurk.svg" class="h-50 align-self-center" alt=""/> #}
+                                        </span>
+                                    </div>
+                                </div>
+                                <!--end::Info-->
+
+                                <!--begin::Link-->
+                                <span class="text-gray-900 fw-bold text-hover-primary fs-4">
+                                    {{bu.libelle}}
+                                </span>
+                                <!--end::Link-->
+
+                                <!--begin::Desc-->
+                                <p class="w-md-300px py-3">{{bu.description|raw}}</p>
+                                <!--end::Desc-->
+                            </div>
+
+                            <!--begin::Team-->
+                            <div class="d-flex align-items-center">
+                                {% for user in bu.users %}
+                                {% set randomColor = random(['primary', 'secondary', 'success', 'danger', 'info', 'warning']) %}
+                                <span class="symbol symbol-35px me-2" data-bs-toggle="tooltip" title="{{user.nomComplet}}">
+                                    {% if user.avatar %}<img src="{{asset(user.avatar.filename|default('assets/media/svg/avatars/blank.svg'))}}" alt=""/>
+                                    {% else %}<span class="symbol-label bg-{{randomColor}} text-inverse-{{randomColor}} fw-bold">{{user.nomComplet|slice(0,1)|upper}}</span>{% endif %}
+                                </span>
+                                {% endfor %}
+                            </div>
+                            <!--end::Team-->
+                        </div>
+                        <!--end::Body-->
+                    </a>
+                    <!--end::Mixed Widget 9-->
+                    {% endfor %}
+                    {% for bu in 1..3 %}
+                    <!--begin::Mixed Widget 9-->
+                    <a href="{{path('dashboard')}}" class="card card-xl-stretch border-hover-danger mb-xl-8">
+                        <!--begin::Body-->
+                        <div class="card-body d-flex flex-column pb-10 pb-lg-15">
+                            <div class="flex-grow-1">
+                                <!--begin::Info-->
+                                <div class="d-flex align-items-center pe-2 mb-5">
+                                    <span class="text-muted fw-bold fs-5 flex-grow-1">
+                                        {# Modifié il ya 2 jours #}
+                                    </span>
+                                    
+                                    <div class="symbol symbol-50px">
+                                        <span class="symbol-label bg-light">
+                                            <i class="ki-duotone ki-abstract-{{random(['39', '26', '46', '2', '24'])}} fs-1">
+                                                <span class="path1"></span>
+                                                <span class="path2"></span>
+                                            </i>
+                                            {# <img src="/metronic8/demo1/assets/media/svg/brand-logos/plurk.svg" class="h-50 align-self-center" alt=""/> #}
+                                        </span>
+                                    </div>
+                                </div>
+                                <!--end::Info-->
+
+                                <!--begin::Link-->
+                                <span class="text-gray-900 fw-bold text-hover-primary fs-4">
+                                    Équipe Commerciale
+                                </span>
+                                <!--end::Link-->
+
+                                <!--begin::Desc-->
+                                <p class="w-md-300px py-3">Pitstop creates quick email campaigns. We help to strengthen your brand for your every purpose. </p>
+                                <!--end::Desc-->
+                            </div>
+
+                            <!--begin::Team-->
+                            <div class="d-flex align-items-center">
+                                {% for user in 1..4 %}
+                                <span class="symbol symbol-35px me-2" data-bs-toggle="tooltip" title="Mark Larson">
+                                    <span class="symbol-label bg-primary text-inverse-primary fw-bold">C</span>
+                                </span>
+                                {% endfor %}
+                            </div>
+                            <!--end::Team-->
+                        </div>
+                        <!--end::Body-->
+                    </a>
+                    <!--end::Mixed Widget 9-->
+                    {% endfor %}
+                    <!--end::Wrapper-->
+                </div>
+                <!--end::Content-->
+            </div>
+            <!--end::Authentication - Signup Welcome Message-->
+        </div>
+
+		<!--begin::Javascript-->
+		<!--begin::Global Javascript Bundle(mandatory for all pages)-->
+        <script src="{{asset('assets/plugins/global/plugins.bundle.js')}}"> </script>
+		<script src="{{asset('assets/js/scripts.bundle.js')}}"></script>
+		<!--end::Global Javascript Bundle-->
+
+    </body>
+</html>

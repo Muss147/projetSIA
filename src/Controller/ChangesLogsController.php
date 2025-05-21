@@ -26,15 +26,27 @@ final class ChangesLogsController extends AbstractController
         ]);
     }
 
-    #[Route('/{id}/delete', name: 'delete_log', methods: ['POST'])]
+    #[Route('/delete/{id}', name: 'delete_log', methods: ['POST'])]
     public function delete(Request $request, ActivityLog $log, EntityManagerInterface $entityManager): Response
     {
         if ($this->isCsrfTokenValid('delete'.$log->getId(), $request->getPayload()->getString('_token'))) {
-            // $log->remove($this->getUser());
+            $entityManager->remove($log);
             $entityManager->flush();
         }
 
-        return $this->redirectToRoute('permissions', [], Response::HTTP_SEE_OTHER);
+        return $this->redirectToRoute('changes_logs', [], Response::HTTP_SEE_OTHER);
+    }
+
+    #[Route('/empty-all-logs', name: 'empty_logs', methods: ['POST'])]
+    public function emptyAllLogs(Request $request, ActivityLogRepository $activityLogRepository, EntityManagerInterface $entityManager): Response
+    {
+        $logs = $activityLogRepository->findAll();
+        if ($this->isCsrfTokenValid('delete'.count($logs), $request->getPayload()->getString('_token'))) {
+            foreach ($logs as $key => $log) $entityManager->remove($log);
+            $entityManager->flush();
+        }
+
+        return $this->redirectToRoute('changes_logs', [], Response::HTTP_SEE_OTHER);
     }
 
 }

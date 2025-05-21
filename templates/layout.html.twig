@@ -160,6 +160,21 @@
                                         <!--begin:Menu item-->
                                         <div class="menu-item">
                                             <!--begin:Menu link-->
+                                            <a class="menu-link{% if app.session.get('menu') == 'business_units' %} active{% endif %}" href="{{path('bu_list')}}">
+                                                <span class="menu-icon">
+                                                    <i class="ki-duotone ki-abstract-26 fs-2">
+                                                        <span class="path1"></span>
+                                                        <span class="path2"></span>
+                                                    </i>
+                                                </span>
+                                                <span class="menu-title">Business Units</span>
+                                            </a>
+                                            <!--end:Menu link-->
+                                        </div>
+                                        <!--end:Menu item-->
+                                        <!--begin:Menu item-->
+                                        <div class="menu-item">
+                                            <!--begin:Menu link-->
                                             <a class="menu-link{% if app.session.get('menu') == 'logs' %} active{% endif %}" href="{{path('changes_logs')}}">
                                                 <span class="menu-icon">
                                                     <i class="ki-duotone ki-code fs-2">
@@ -177,7 +192,7 @@
                                         <!--begin:Menu item-->
                                         <div class="menu-item">
                                             <!--begin:Menu link-->
-                                            <a class="menu-link" href="">
+                                            <a class="menu-link{% if app.session.get('menu') == 'trash' %} active{% endif %}" href="{{path('trash_list')}}">
                                                 <span class="menu-icon">
                                                     <i class="ki-duotone ki-trash fs-2">
                                                         <span class="path1"></span>
@@ -219,6 +234,38 @@
                                         </div>
                                         <!--end:Menu item-->
                                         <!--begin:Menu item-->
+                                        <div data-kt-menu-trigger="click" class="menu-item menu-accordion">
+                                            <!--begin:Menu link-->
+                                            <a href="{{path('liste_clients')}}" class="menu-link{% if app.session.get('menu') == 'fournisseurs' %} active{% endif %}">
+                                                <span class="menu-icon">
+                                                    <i class="ki-duotone ki-address-book fs-2">
+                                                        <span class="path1"></span>
+                                                        <span class="path2"></span>
+                                                        <span class="path3"></span>
+                                                    </i>
+                                                </span>
+                                                <span class="menu-title">Fournisseurs</span>
+                                            </a>
+                                            <!--end:Menu link-->
+                                        </div>
+                                        <!--end:Menu item-->
+                                        <!--begin:Menu item-->
+                                        <div data-kt-menu-trigger="click" class="menu-item menu-accordion">
+                                            <!--begin:Menu link-->
+                                            <a href="{{path('param_type', {type: 'Categorie'})}}" class="menu-link{% if app.session.get('menu') == 'bpu' %} active{% endif %}">
+                                                <span class="menu-icon">
+                                                    <i class="ki-duotone ki-address-book fs-2">
+                                                        <span class="path1"></span>
+                                                        <span class="path2"></span>
+                                                        <span class="path3"></span>
+                                                    </i>
+                                                </span>
+                                                <span class="menu-title">Bordereau des Prix Unitaires</span>
+                                            </a>
+                                            <!--end:Menu link-->
+                                        </div>
+                                        <!--end:Menu item-->
+                                        <!--begin:Menu item-->
                                         <div data-kt-menu-trigger="click" class="menu-item menu-accordion disabled">
                                             <!--begin:Menu link-->
                                             <span class="menu-link">
@@ -228,7 +275,7 @@
                                                         <span class="path2"></span>
                                                     </i>
                                                 </span>
-                                                <span class="menu-title">Paramètres</span>
+                                                <span class="menu-title">Utilitaires</span>
                                                 <span class="menu-arrow"></span>
                                             </span>
                                             <!--end:Menu link-->
@@ -237,7 +284,7 @@
                                                 <!--begin:Menu item-->
                                                 <div class="menu-item">
                                                     <!--begin:Menu link-->
-                                                    <a class="menu-link" href="{{path('liste_categories')}}">
+                                                    <a class="menu-link" href="">
                                                         <span class="menu-bullet">
                                                             <span class="bullet bullet-dot"></span>
                                                         </span>
@@ -280,7 +327,7 @@
                                         <!--end::Name-->
 
                                         <!--begin::Major-->
-                                        {# <span class="text-muted fw-semibold d-block fs-7 lh-1">{{app.user.role.libelle|default(null)}}</span> #}
+                                        <span class="text-muted fw-semibold d-block fs-7 lh-1">{{app.user.role.libelle|default(null)}}</span>
                                         <!--end::Major-->
                                     </div>
                                     <!--end::User info-->
@@ -316,7 +363,7 @@
                                                         {# <span class="badge badge-light-success fw-bold fs-8 px-2 py-1 ms-2">Pro</span> #}
                                                     </div>
 
-                                                    <a href="#" class="fw-semibold text-muted text-hover-primary fs-7">
+                                                    <a href="{{path('user_resume', {user: app.user.id})}}" class="fw-semibold text-muted text-hover-primary fs-7">
                                                         {{app.user.email}}
                                                     </a>
                                                 </div>
@@ -331,7 +378,7 @@
 
                                         <!--begin::Menu item-->
                                         <div class="menu-item px-5">
-                                            <a href="" class="menu-link px-5">
+                                            <a href="{{path('user_resume', {user: app.user.id})}}" class="menu-link px-5">
                                                 Mon profil
                                             </a>
                                         </div>
@@ -339,7 +386,7 @@
 
                                         <!--begin::Menu item-->
                                         <div class="menu-item px-5">
-                                            <a href="" class="menu-link px-5">
+                                            <a href="{{path('user_setting', {user: app.user.id})}}" class="menu-link px-5">
                                                 Modifier
                                             </a>
                                         </div>
@@ -347,7 +394,7 @@
 
                                         <!--begin::Menu item-->
                                         <div class="menu-item px-5">
-                                            <a href="" class="menu-link px-5">
+                                            <a href="{{path('user_logs', {user: app.user.id})}}" class="menu-link px-5">
                                                 Events & Logs
                                             </a>
                                         </div>
@@ -369,6 +416,14 @@
                                                         <img class="w-15px h-15px rounded-1 ms-2" src="{{asset('assets/media/flags/france.svg')}}" alt=""/>
                                                     </span>
                                                 </span>
+                                            </a>
+                                        </div>
+                                        <!--end::Menu item-->
+
+                                        <!--begin::Menu item-->
+                                        <div class="menu-item px-5">
+                                            <a href="{{path('acceuil')}}" class="menu-link px-5">
+                                                Changer de B.U
                                             </a>
                                         </div>
                                         <!--end::Menu item-->

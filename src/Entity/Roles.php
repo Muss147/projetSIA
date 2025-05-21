@@ -53,6 +53,11 @@ class Roles extends EntityBase
         return $this->id;
     }
 
+    public function getEntityLibelle(): ?string
+    {
+        return $this->libelle;
+    }
+
     public function getLibelle(): ?string
     {
         return $this->libelle;

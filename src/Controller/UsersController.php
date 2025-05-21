@@ -94,7 +94,7 @@ final class UsersController extends AbstractController
                     ]));
                 $mailer->send($emailMessage);
 
-                $this->addFlash('success', 'Utilisateur ajouté. Un email d’activation lui a été envoyé.');
+                $this->addFlash('success', 'Utilisateur ajouté. Un email d’activation a été envoyé à son adresse :<b>'. $user->getEmail() .'</b>');
                 return $this->redirectToRoute('liste_users');
             }
         }

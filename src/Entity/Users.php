@@ -23,6 +23,9 @@ class Users extends EntityBase implements UserInterface, PasswordAuthenticatedUs
     #[ORM\Column(length: 255, nullable: true)]
     private ?string $nomComplet = null;
 
+    #[ORM\Column(length: 255, nullable: true)]
+    private ?string $poste = null;
+
     #[ORM\Column(length: 255, unique: true)]
     private ?string $email = null;
 
@@ -53,14 +56,26 @@ class Users extends EntityBase implements UserInterface, PasswordAuthenticatedUs
     #[ORM\OneToMany(targetEntity: ActivityLog::class, mappedBy: 'user', orphanRemoval: true)]
     private Collection $logs;
 
+    /**
+     * @var Collection<int, BusinessUnits>
+     */
+    #[ORM\ManyToMany(targetEntity: BusinessUnits::class, mappedBy: 'users')]
+    private Collection $businessUnits;
+
     public function __construct()
     {
         $this->logs = new ArrayCollection();
+        $this->businessUnits = new ArrayCollection();
     }
 
     public function getId(): ?int
     {
         return $this->id;
+    }
+
+    public function getEntityLibelle(): ?string
+    {
+        return $this->nomComplet;
     }
 
     public function getNomComplet(): ?string
@@ -222,6 +237,45 @@ class Users extends EntityBase implements UserInterface, PasswordAuthenticatedUs
                 $log->setUser(null);
             }
         }
+
+        return $this;
+    }
+
+    /**
+     * @return Collection<int, BusinessUnits>
+     */
+    public function getBusinessUnits(): Collection
+    {
+        return $this->businessUnits;
+    }
+
+    public function addBusinessUnit(BusinessUnits $businessUnit): static
+    {
+        if (!$this->businessUnits->contains($businessUnit)) {
+            $this->businessUnits->add($businessUnit);
+            $businessUnit->addUser($this);
+        }
+
+        return $this;
+    }
+
+    public function removeBusinessUnit(BusinessUnits $businessUnit): static
+    {
+        if ($this->businessUnits->removeElement($businessUnit)) {
+            $businessUnit->removeUser($this);
+        }
+
+        return $this;
+    }
+
+    public function getPoste(): ?string
+    {
+        return $this->poste;
+    }
+
+    public function setPoste(?string $poste): static
+    {
+        $this->poste = $poste;
 
         return $this;
     }
