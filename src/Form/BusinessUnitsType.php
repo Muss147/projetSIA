@@ -24,6 +24,7 @@ class BusinessUnitsType extends AbstractType
                 'choice_attr' => function (Users $user) {
                     return [
                         'data-email' => $user->getEmail(),
+                        'data-role' => $user->getRole(),
                         'data-avatar' => $user->getAvatar() ?? null,
                     ];
                 },

@@ -93,13 +93,13 @@
 							<div
 								class="m-0">
 								<!--begin::Button-->
-								<button type="button" class="btn btn-light-primary" data-bs-toggle="modal" data-bs-target="#kt_modal_add_permission">
+								<button type="button" class="btn btn-light-primary" data-bs-toggle="modal" data-bs-target="#kt_modal_users_search">
 									<i class="ki-duotone ki-plus-square fs-3">
 										<span class="path1"></span>
 										<span class="path2"></span>
 										<span class="path3"></span>
 									</i>
-									Ajouter une permission
+									Ajouter un B.U
 								</button>
 								<!--end::Button-->
 							</div>
@@ -117,7 +117,7 @@
 								class="col-md-6 col-xl-4">
 								<!--begin::Card-->
 								<a
-									href="" class="card border-hover-primary ">
+									href="" class="card border-hover-primary min-h-275px">
 									<!--begin:: Card body-->
 									<div class="card-body d-flex flex-column pb-10 pb-lg-15">
 										<div
@@ -142,19 +142,20 @@
 											<!--end::Info-->
 
 											<!--begin::Link-->
-											<a href="#" class="text-gray-900 fw-bold text-hover-primary fs-4">
+											<span class="text-gray-900 fw-bold text-hover-primary fs-4">
 												{{bu.libelle}}
-											</a>
+											</span>
 											<!--end::Link-->
 
 											<!--begin::Desc-->
-											<p class="py-3">{{bu.description|raw}}</p>
+											<p class="py-3">{{ bu.description|slice(0, 80)|raw }}{{ bu.description|length >= 80 ? '...' : '' }}</p>
 											<!--end::Desc-->
 										</div>
 
 										<!--begin::Team-->
 										<div class="d-flex align-items-center">
 											{% for user in bu.users %}
+                                				{% set randomColor = random(['primary', 'secondary', 'success', 'danger', 'info', 'warning']) %}
 												<span class="symbol symbol-35px me-2" data-bs-toggle="tooltip" title="{{user.nomComplet}}">
 													{% if user.avatar %}<img src="{{asset(user.avatar.filename|default('assets/media/svg/avatars/blank.svg'))}}" alt=""/>
                                                     {% else %}<span class="symbol-label bg-{{randomColor}} text-inverse-{{randomColor}} fw-bold">{{user.nomComplet|slice(0,1)|upper}}</span>{% endif %}
@@ -214,7 +215,7 @@
 					class="modal fade" id="kt_modal_users_search" tabindex="-1" aria-hidden="true">
 					<!--begin::Modal dialog-->
 					<div
-						class="modal-dialog modal-dialog-centered mw-650px">
+						class="modal-dialog modal-dialog-centered modal-dialog-scrollable mw-650px">
 						<!--begin::Modal content-->
 						<div
 							class="modal-content">
@@ -292,7 +293,7 @@
                                             <!--end::Icon-->
 
                                             <!--begin::Input-->
-                                            <input type="text" class="form-control form-control-lg form-control-solid px-15" name="search" value="" placeholder="Search by username, full name or email..." data-kt-search-element="input"/>
+                                            <input type="text" class="form-control form-control-lg form-control-solid px-15" name="search" value="" placeholder="Search by username, full name or email..." data-kt-search-element="input" autocomplete="off"/>
                                             <!--end::Input-->
 
                                             <!--begin::Spinner-->
@@ -323,13 +324,13 @@
                                                     {% for index, user in new_bu.users %}
                                                     <!--begin::User-->
                                                     <div
-                                                        class="rounded d-flex flex-stack bg-active-lighten p-4" data-user-id="0">
+                                                        class="rounded d-flex flex-stack bg-active-lighten p-4" data-user-id="{{user.vars.id}}">
                                                         <!--begin::Details-->
                                                         <div
                                                             class="d-flex align-items-center">
                                                             <!--begin::Checkbox-->
                                                             <label class="form-check form-check-custom form-check-solid me-5">
-                                                                <input class="form-check-input" type="checkbox" name="users" data-kt-check="true" data-kt-check-target="[data-user-id='0']" value="{{user.vars.id}}"/>
+																{{ form_widget(user, {'attr': {'class': 'form-check-input', 'data-kt-check': 'true', 'data-kt-check-target': "[data-user-id='{{user.vars.id}}']"}}) }}
                                                             </label>
                                                             <!--end::Checkbox-->
 
@@ -353,9 +354,7 @@
                                                         <!--begin::Access menu-->
                                                         <div class="ms-2 w-100px">
                                                             <select class="form-select form-select-solid form-select-sm" data-control="select2" data-hide-search="true">
-                                                                <option value="1">Guest</option>
-                                                                <option value="2" selected>Owner</option>
-                                                                <option value="3">Can Edit</option>
+                                                                {% for role in roles %}<option value="{{role.id}}" {% if user.vars.attr['data-role'] == role %}selected{% endif %}>{{role.libelle}}</option>{% endfor %}
                                                             </select>
                                                         </div>
                                                         <!--end::Access menu-->
