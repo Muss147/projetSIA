@@ -220,7 +220,51 @@
                                         <!--begin:Menu item-->
                                         <div data-kt-menu-trigger="click" class="menu-item menu-accordion">
                                             <!--begin:Menu link-->
-                                            <a href="{{path('liste_clients')}}" class="menu-link{% if app.session.get('menu') == 'clients' %} active{% endif %}">
+                                            <span class="menu-link">
+                                                <span class="menu-icon">
+                                                    <i class="ki-duotone ki-abstract-41 fs-2">
+                                                        <span class="path1"></span>
+                                                        <span class="path2"></span>
+                                                    </i>
+                                                </span>
+                                                <span class="menu-title">Projects</span>
+                                                <span class="menu-arrow"></span>
+                                            </span>
+                                            <!--end:Menu link-->
+                                            <!--begin:Menu sub-->
+                                            <div class="menu-sub menu-sub-accordion">
+                                                <!--begin:Menu item-->
+                                                <div class="menu-item">
+                                                    <!--begin:Menu link-->
+                                                    <a class="menu-link" href="">
+                                                        <span class="menu-bullet">
+                                                            <span class="bullet bullet-dot"></span>
+                                                        </span>
+                                                        <span class="menu-title">Liste des projets</span>
+                                                    </a>
+                                                    <!--end:Menu link-->
+                                                </div>
+                                                <!--end:Menu item-->
+                                                <!--begin:Menu item-->
+                                                <div class="menu-item">
+                                                    <!--begin:Menu link-->
+                                                    <a class="menu-link" href="">
+                                                        <span class="menu-bullet">
+                                                            <span class="bullet bullet-dot"></span>
+                                                        </span>
+                                                        <span class="menu-title">Nouveau projet</span>
+                                                    </a>
+                                                    <!--end:Menu link-->
+                                                </div>
+                                                <!--end:Menu item-->
+                                            </div>
+                                            <!--end:Menu sub-->
+                                        </div>
+                                        <!--end:Menu item-->
+                                        <!--begin:Menu item-->
+                                        <div data-kt-menu-trigger="click" class="menu-item menu-accordion">
+                                            <!--begin:Menu link-->
+                                            <a href="" class="menu-link{% if app.session.get('menu') == 'clients' %} active{% endif %}">
                                                 <span class="menu-icon">
                                                     <i class="ki-duotone ki-address-book fs-2">
                                                         <span class="path1"></span>
@@ -236,12 +280,11 @@
                                         <!--begin:Menu item-->
                                         <div data-kt-menu-trigger="click" class="menu-item menu-accordion">
                                             <!--begin:Menu link-->
-                                            <a href="{{path('liste_clients')}}" class="menu-link{% if app.session.get('menu') == 'fournisseurs' %} active{% endif %}">
+                                            <a href="" class="menu-link{% if app.session.get('menu') == 'fournisseurs' %} active{% endif %}">
                                                 <span class="menu-icon">
-                                                    <i class="ki-duotone ki-address-book fs-2">
+                                                    <i class="ki-duotone ki-briefcase fs-2">
                                                         <span class="path1"></span>
                                                         <span class="path2"></span>
-                                                        <span class="path3"></span>
                                                     </i>
                                                 </span>
                                                 <span class="menu-title">Fournisseurs</span>
@@ -252,12 +295,11 @@
                                         <!--begin:Menu item-->
                                         <div data-kt-menu-trigger="click" class="menu-item menu-accordion">
                                             <!--begin:Menu link-->
-                                            <a href="{{path('param_type', {type: 'Categorie'})}}" class="menu-link{% if app.session.get('menu') == 'bpu' %} active{% endif %}">
+                                            <a href="{{path('param_type', {type: 'categories'})}}" class="menu-link{% if app.session.get('menu') == 'bpu' %} active{% endif %}">
                                                 <span class="menu-icon">
-                                                    <i class="ki-duotone ki-address-book fs-2">
+                                                    <i class="ki-duotone ki-some-files fs-2">
                                                         <span class="path1"></span>
                                                         <span class="path2"></span>
-                                                        <span class="path3"></span>
                                                     </i>
                                                 </span>
                                                 <span class="menu-title">Bordereau des Prix Unitaires</span>
@@ -288,7 +330,7 @@
                                                         <span class="menu-bullet">
                                                             <span class="bullet bullet-dot"></span>
                                                         </span>
-                                                        <span class="menu-title">Catégories de clients</span>
+                                                        <span class="menu-title">Liste exaustive</span>
                                                     </a>
                                                     <!--end:Menu link-->
                                                 </div>

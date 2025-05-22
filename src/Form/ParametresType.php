@@ -2,12 +2,13 @@
 
 namespace App\Form;
 
-use App\Entity\Parametres;
 use App\Entity\Users;
-use Symfony\Bridge\Doctrine\Form\Type\EntityType;
+use App\Entity\Parametres;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\FormBuilderInterface;
+use Symfony\Bridge\Doctrine\Form\Type\EntityType;
 use Symfony\Component\OptionsResolver\OptionsResolver;
+use Symfony\Component\Form\Extension\Core\Type\HiddenType;
 
 class ParametresType extends AbstractType
 {
@@ -15,28 +16,13 @@ class ParametresType extends AbstractType
     {
         $builder
             ->add('libelle')
-            ->add('slug')
-            ->add('description')
-            ->add('type')
-            ->add('createdAt')
-            ->add('updatedAt')
-            ->add('deletedAt')
-            ->add('parent', EntityType::class, [
-                'class' => Parametres::class,
-                'choice_label' => 'id',
-            ])
-            ->add('createdUser', EntityType::class, [
-                'class' => Users::class,
-                'choice_label' => 'id',
-            ])
-            ->add('updatedUser', EntityType::class, [
-                'class' => Users::class,
-                'choice_label' => 'id',
-            ])
-            ->add('deletedUser', EntityType::class, [
-                'class' => Users::class,
-                'choice_label' => 'id',
-            ])
+            // ->add('description')
+            // ->add('type', HiddenType::class)
+            // ->add('parent', HiddenType::class)
+            // ->add('parent', EntityType::class, [
+            //     'class' => Parametres::class,
+            //     'choice_label' => 'id',
+            // ])
         ;
     }
 

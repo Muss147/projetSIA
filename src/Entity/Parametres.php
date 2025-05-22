@@ -3,11 +3,12 @@
 namespace App\Entity;
 
 use App\Mapping\EntityBase;
-use App\Repository\ParametresRepository;
-use Doctrine\Common\Collections\ArrayCollection;
-use Doctrine\Common\Collections\Collection;
 use Doctrine\DBAL\Types\Types;
 use Doctrine\ORM\Mapping as ORM;
+use App\Repository\ParametresRepository;
+use Doctrine\Common\Collections\Collection;
+use Doctrine\Common\Collections\ArrayCollection;
+use Symfony\Component\String\Slugger\AsciiSlugger;
 
 #[ORM\Entity(repositoryClass: ParametresRepository::class)]
 class Parametres extends EntityBase
@@ -41,7 +42,7 @@ class Parametres extends EntityBase
     /**
      * @var Collection<int, BPU>
      */
-    #[ORM\OneToMany(targetEntity: BPU::class, mappedBy: 'parametres', orphanRemoval: true)]
+    #[ORM\OneToMany(targetEntity: BPU::class, mappedBy: 'parametre', orphanRemoval: true)]
     private Collection $bpu;
 
     public function __construct()
@@ -83,6 +84,17 @@ class Parametres extends EntityBase
         $this->slug = $slug;
 
         return $this;
+    }
+
+    #[ORM\PrePersist]
+    #[ORM\PreUpdate]
+    public function generateSlug(): void
+    {
+        if ($this->libelle) {
+            $slugger = new AsciiSlugger('fr'); // Support du français
+            $slug = $slugger->slug($this->libelle)->lower();
+            $this->slug = $slug;
+        }
     }
 
     public function getDescription(): ?string
@@ -163,7 +175,7 @@ class Parametres extends EntityBase
     {
         if (!$this->bpu->contains($bpu)) {
             $this->bpu->add($bpu);
-            $bpu->setParametres($this);
+            $bpu->setParametre($this);
         }
 
         return $this;
@@ -173,8 +185,8 @@ class Parametres extends EntityBase
     {
         if ($this->bpu->removeElement($bpu)) {
             // set the owning side to null (unless already changed)
-            if ($bpu->getParametres() === $this) {
-                $bpu->setParametres(null);
+            if ($bpu->getParametre() === $this) {
+                $bpu->setParametre(null);
             }
         }
 

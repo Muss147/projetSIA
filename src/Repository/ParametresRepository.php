@@ -16,20 +16,21 @@ class ParametresRepository extends ServiceEntityRepository
         parent::__construct($registry, Parametres::class);
     }
 
-    //    /**
-    //     * @return Parametres[] Returns an array of Parametres objects
-    //     */
-    //    public function findByExampleField($value): array
-    //    {
-    //        return $this->createQueryBuilder('p')
-    //            ->andWhere('p.exampleField = :val')
-    //            ->setParameter('val', $value)
-    //            ->orderBy('p.id', 'ASC')
-    //            ->setMaxResults(10)
-    //            ->getQuery()
-    //            ->getResult()
-    //        ;
-    //    }
+       /**
+        * @return Parametres[] Returns an array of Parametres objects
+        */
+       public function findByType($value): array
+       {
+           return $this->createQueryBuilder('p')
+               ->andWhere('p.type = :val')
+               ->setParameter('val', $value)
+                ->andWhere('p.deletedAt IS NULL')
+                ->orderBy('p.id', 'DESC')
+               ->setMaxResults(10)
+               ->getQuery()
+               ->getResult()
+           ;
+       }
 
     //    public function findOneBySomeField($value): ?Parametres
     //    {

@@ -5,6 +5,7 @@ namespace App\Entity;
 use App\Mapping\EntityBase;
 use Doctrine\ORM\Mapping as ORM;
 use App\Repository\BPURepository;
+use Symfony\Component\String\Slugger\AsciiSlugger;
 
 #[ORM\Entity(repositoryClass: BPURepository::class)]
 class BPU extends EntityBase
@@ -15,7 +16,7 @@ class BPU extends EntityBase
     private ?int $id = null;
 
     #[ORM\Column(length: 255)]
-    private ?string $Unite = null;
+    private ?string $unite = null;
 
     #[ORM\Column(nullable: true)]
     private ?int $materiaux = null;
@@ -49,7 +50,10 @@ class BPU extends EntityBase
 
     #[ORM\ManyToOne(inversedBy: 'bpu')]
     #[ORM\JoinColumn(nullable: false)]
-    private ?Parametres $parametres = null;
+    private ?Parametres $parametre = null;
+
+    #[ORM\Column(length: 255)]
+    private ?string $slug = null;
 
     public function getId(): ?int
     {
@@ -63,12 +67,12 @@ class BPU extends EntityBase
 
     public function getUnite(): ?string
     {
-        return $this->Unite;
+        return $this->unite;
     }
 
-    public function setUnite(string $Unite): static
+    public function setUnite(string $unite): static
     {
-        $this->Unite = $Unite;
+        $this->unite = $unite;
 
         return $this;
     }
@@ -193,15 +197,38 @@ class BPU extends EntityBase
         return $this;
     }
 
-    public function getParametres(): ?Parametres
+    public function getParametre(): ?Parametres
     {
-        return $this->parametres;
+        return $this->parametre;
     }
 
-    public function setParametres(?Parametres $parametres): static
+    public function setParametre(?Parametres $parametre): static
     {
-        $this->parametres = $parametres;
+        $this->parametre = $parametre;
 
         return $this;
+    }
+
+    public function getSlug(): ?string
+    {
+        return $this->slug;
+    }
+
+    public function setSlug(string $slug): static
+    {
+        $this->slug = $slug;
+
+        return $this;
+    }
+
+    #[ORM\PrePersist]
+    #[ORM\PreUpdate]
+    public function generateSlug(): void
+    {
+        if ($this->designation) {
+            $slugger = new AsciiSlugger('fr'); // Support du français
+            $slug = $slugger->slug($this->designation)->lower();
+            $this->slug = $slug;
+        }
     }
 }

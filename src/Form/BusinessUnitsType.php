@@ -18,8 +18,15 @@ class BusinessUnitsType extends AbstractType
             ->add('description')
             ->add('users', EntityType::class, [
                 'class' => Users::class,
-                'choice_label' => 'id',
+                'choice_label' => 'nomComplet',
+                'expanded' => true,
                 'multiple' => true,
+                'choice_attr' => function (Users $user) {
+                    return [
+                        'data-email' => $user->getEmail(),
+                        'data-avatar' => $user->getAvatar() ?? null,
+                    ];
+                },
             ])
         ;
     }
