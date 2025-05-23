@@ -192,5 +192,4 @@ class Parametres extends EntityBase
 
         return $this;
     }
-
 }

@@ -34,9 +34,16 @@ class BusinessUnits extends EntityBase
     #[ORM\ManyToMany(targetEntity: Users::class, inversedBy: 'businessUnits')]
     private Collection $users;
 
+    /**
+     * @var Collection<int, Projets>
+     */
+    #[ORM\OneToMany(targetEntity: Projets::class, mappedBy: 'businessUnit')]
+    private Collection $projets;
+
     public function __construct()
     {
         $this->users = new ArrayCollection();
+        $this->projets = new ArrayCollection();
     }
 
     public function getId(): ?int
@@ -116,6 +123,36 @@ class BusinessUnits extends EntityBase
     public function setSlug(string $slug): static
     {
         $this->slug = $slug;
+
+        return $this;
+    }
+
+    /**
+     * @return Collection<int, Projets>
+     */
+    public function getProjets(): Collection
+    {
+        return $this->projets;
+    }
+
+    public function addProjet(Projets $projet): static
+    {
+        if (!$this->projets->contains($projet)) {
+            $this->projets->add($projet);
+            $projet->setBusinessUnit($this);
+        }
+
+        return $this;
+    }
+
+    public function removeProjet(Projets $projet): static
+    {
+        if ($this->projets->removeElement($projet)) {
+            // set the owning side to null (unless already changed)
+            if ($projet->getBusinessUnit() === $this) {
+                $projet->setBusinessUnit(null);
+            }
+        }
 
         return $this;
     }

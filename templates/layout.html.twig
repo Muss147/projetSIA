@@ -218,7 +218,7 @@
                                         </div>
                                         <!--end:Menu item-->
                                         <!--begin:Menu item-->
-                                        <div data-kt-menu-trigger="click" class="menu-item menu-accordion">
+                                        <div data-kt-menu-trigger="click" class="menu-item menu-accordion{% if app.session.get('menu') == 'projets_manage' %} here show{% endif %}">
                                             <!--begin:Menu link-->
                                             <span class="menu-link">
                                                 <span class="menu-icon">
@@ -236,7 +236,7 @@
                                                 <!--begin:Menu item-->
                                                 <div class="menu-item">
                                                     <!--begin:Menu link-->
-                                                    <a class="menu-link" href="">
+                                                    <a class="menu-link{% if app.session.get('subMenu') == 'projets' %} active{% endif %}" href="{{path('projets_list')}}">
                                                         <span class="menu-bullet">
                                                             <span class="bullet bullet-dot"></span>
                                                         </span>
@@ -252,7 +252,7 @@
                                                         <span class="menu-bullet">
                                                             <span class="bullet bullet-dot"></span>
                                                         </span>
-                                                        <span class="menu-title">Nouveau projet</span>
+                                                        <span class="menu-title">Contrats</span>
                                                     </a>
                                                     <!--end:Menu link-->
                                                 </div>
@@ -310,7 +310,7 @@
                                         <!--begin:Menu item-->
                                         <div data-kt-menu-trigger="click" class="menu-item menu-accordion disabled">
                                             <!--begin:Menu link-->
-                                            <span class="menu-link">
+                                            <a href="" class="menu-link">
                                                 <span class="menu-icon">
                                                     <i class="ki-duotone ki-chart fs-2">
                                                         <span class="path1"></span>
@@ -319,24 +319,8 @@
                                                 </span>
                                                 <span class="menu-title">Utilitaires</span>
                                                 <span class="menu-arrow"></span>
-                                            </span>
-                                            <!--end:Menu link-->
-                                            <!--begin:Menu sub-->
-                                            <div class="menu-sub menu-sub-accordion">
-                                                <!--begin:Menu item-->
-                                                <div class="menu-item">
-                                                    <!--begin:Menu link-->
-                                                    <a class="menu-link" href="">
-                                                        <span class="menu-bullet">
-                                                            <span class="bullet bullet-dot"></span>
-                                                        </span>
-                                                        <span class="menu-title">Liste exaustive</span>
-                                                    </a>
-                                                    <!--end:Menu link-->
-                                                </div>
-                                                <!--end:Menu item-->
-                                            </div>
-                                            <!--end:Menu sub-->
+                                            </a>
+                                            <!--end:Menu link-->-
                                         </div>
                                         <!--end:Menu item-->
                                     </div>
