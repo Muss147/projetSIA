@@ -52,6 +52,9 @@ class Contrats extends EntityBase
     #[ORM\JoinColumn(nullable: false)]
     private ?ChefChantier $chefChantier = null;
 
+    #[ORM\OneToOne(mappedBy: 'contrat', cascade: ['persist', 'remove'])]
+    private ?Devis $devis = null;
+
     public function getId(): ?int
     {
         return $this->id;
@@ -190,6 +193,23 @@ class Contrats extends EntityBase
     public function setChefChantier(?ChefChantier $chefChantier): static
     {
         $this->chefChantier = $chefChantier;
+
+        return $this;
+    }
+
+    public function getDevis(): ?Devis
+    {
+        return $this->devis;
+    }
+
+    public function setDevis(Devis $devis): static
+    {
+        // set the owning side of the relation if necessary
+        if ($devis->getContrat() !== $this) {
+            $devis->setContrat($this);
+        }
+
+        $this->devis = $devis;
 
         return $this;
     }

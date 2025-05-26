@@ -3,6 +3,8 @@
 namespace App\Entity;
 
 use App\Mapping\EntityBase;
+use Doctrine\Common\Collections\ArrayCollection;
+use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
 use App\Repository\BPURepository;
 use Symfony\Component\String\Slugger\AsciiSlugger;
@@ -54,6 +56,17 @@ class BPU extends EntityBase
 
     #[ORM\Column(length: 255)]
     private ?string $slug = null;
+
+    /**
+     * @var Collection<int, DevisBPU>
+     */
+    #[ORM\OneToMany(targetEntity: DevisBPU::class, mappedBy: 'bpu')]
+    private Collection $devis;
+
+    public function __construct()
+    {
+        $this->devis = new ArrayCollection();
+    }
 
     public function getId(): ?int
     {
@@ -230,5 +243,35 @@ class BPU extends EntityBase
             $slug = $slugger->slug($this->designation)->lower();
             $this->slug = $slug;
         }
+    }
+
+    /**
+     * @return Collection<int, DevisBPU>
+     */
+    public function getDevis(): Collection
+    {
+        return $this->devis;
+    }
+
+    public function addDevi(DevisBPU $devi): static
+    {
+        if (!$this->devis->contains($devi)) {
+            $this->devis->add($devi);
+            $devi->setBpu($this);
+        }
+
+        return $this;
+    }
+
+    public function removeDevi(DevisBPU $devi): static
+    {
+        if ($this->devis->removeElement($devi)) {
+            // set the owning side to null (unless already changed)
+            if ($devi->getBpu() === $this) {
+                $devi->setBpu(null);
+            }
+        }
+
+        return $this;
     }
 }
