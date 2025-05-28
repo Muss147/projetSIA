@@ -508,10 +508,11 @@
 														<!--end::Table head-->
 
 														<!--begin::Table body-->
-														<tbody data-kt-element="items" data-prototype="{{ form_widget(devis_form.devisBPUs.vars.prototype)|e('html_attr') }}">
+														<tbody data-prototype="{{ include('contrats/_prototype_devis_bpu.html.twig', { form: devis_form.devisBPUs.vars.prototype })|e('html_attr') }}"
+															data-index="{{ devis_form.devisBPUs|length }}">
+															
 															{% for devisBPUForm in devis_form.devisBPUs %}
-															{% dump(devisBPUForm.bpu.vars.choices) %}
-															<tr class="border-bottom border-bottom-dashed" data-kt-element="bpu">
+															<tr class="border-bottom border-bottom-dashed" data-kt-element="item">
 																<td class="pe-4">
 																	{{ form_widget(devisBPUForm.bpu) }}
 																</td>
@@ -526,8 +527,7 @@
 																</td>
 																<td class="pt-5 text-end">
 																	<button type="button" class="btn btn-sm btn-icon btn-active-color-primary" data-kt-element="remove-item">
-																		<i class="ki-duotone ki-trash fs-3"></i>
-																	</button>
+																		<i class="ki-duotone ki-trash fs-3"><span class="path1"></span><span class="path2"></span><span class="path3"></span><span class="path4"></span><span class="path5"></span></i>                            </button>                             
 																</td>
 															</tr>
 															{% endfor %}
@@ -572,21 +572,23 @@
 												<!--end::Table-->
 
 												<!--begin::Item template-->
-												<table class="table d-none" data-kt-element="item-template">
+												{# <table class="table d-none" data-kt-element="item-template">
 													<tr class="border-bottom border-bottom-dashed" data-kt-element="item">
-														<td class="pe-4">
-															{# {{ form_widget(devis_form.devisBPUs.vars.prototype.bpu) }} #}
+														<td class="pe-7">                                            
+															<input type="text" class="form-control form-control-solid mb-2" name="name[]" placeholder="Item name"/>
+
+															<input type="text" class="form-control form-control-solid" name="description[]" placeholder="Description"/>     
 														</td>
 
-														<td class="ps-0">
-															{# {{ form_widget(devis_form.devisBPUs.vars.prototype.quantite, {'attr': {'class': 'form-control form-control-solid', 'placeholder': '1', 'data-kt-element': 'quantity', 'name': '__name__[quantite]'}}) }} #}
+														<td class="ps-0">                                            
+															<input type="text" class="form-control form-control-solid" type="number" min="1" name="quantity[]" placeholder="1" data-kt-element="quantity"/>
 														</td>
 
-														<td class="pt-8 ps-0 text-end">
-															<span data-kt-element="price">0.00</span>
+														<td>   
+															<input type="text" class="form-control form-control-solid text-end" name="price[]" placeholder="0.00" data-kt-element="price"/>
 														</td>
 														
-														<td class="pt-8 ps-0 text-end">
+														<td class="pt-8 text-end">
 															$<span data-kt-element="total">0.00</span>
 														</td>
 
@@ -595,7 +597,7 @@
 																<i class="ki-duotone ki-trash fs-3"><span class="path1"></span><span class="path2"></span><span class="path3"></span><span class="path4"></span><span class="path5"></span></i>                            </button>                             
 														</td>
 													</tr>
-												</table>
+												</table> #}
 
 												<table class="table d-none" data-kt-element="empty-template">
 													<tr data-kt-element="empty">
