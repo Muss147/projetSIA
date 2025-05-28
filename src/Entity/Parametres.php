@@ -42,7 +42,7 @@ class Parametres extends EntityBase
     /**
      * @var Collection<int, BPU>
      */
-    #[ORM\OneToMany(targetEntity: BPU::class, mappedBy: 'parametre', orphanRemoval: true)]
+    #[ORM\OneToMany(targetEntity: BPU::class, mappedBy: 'parent', orphanRemoval: true)]
     private Collection $bpu;
 
     public function __construct()
@@ -175,7 +175,7 @@ class Parametres extends EntityBase
     {
         if (!$this->bpu->contains($bpu)) {
             $this->bpu->add($bpu);
-            $bpu->setParametre($this);
+            $bpu->setParent($this);
         }
 
         return $this;
@@ -185,8 +185,8 @@ class Parametres extends EntityBase
     {
         if ($this->bpu->removeElement($bpu)) {
             // set the owning side to null (unless already changed)
-            if ($bpu->getParametre() === $this) {
-                $bpu->setParametre(null);
+            if ($bpu->getParent() === $this) {
+                $bpu->setParent(null);
             }
         }
 

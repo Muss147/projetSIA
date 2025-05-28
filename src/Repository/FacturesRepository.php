@@ -2,22 +2,22 @@
 
 namespace App\Repository;
 
-use App\Entity\FacturesDQE;
+use App\Entity\Factures;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
 use Doctrine\Persistence\ManagerRegistry;
 
 /**
- * @extends ServiceEntityRepository<FacturesDQE>
+ * @extends ServiceEntityRepository<Factures>
  */
-class FacturesDQERepository extends ServiceEntityRepository
+class FacturesRepository extends ServiceEntityRepository
 {
     public function __construct(ManagerRegistry $registry)
     {
-        parent::__construct($registry, FacturesDQE::class);
+        parent::__construct($registry, Factures::class);
     }
 
     //    /**
-    //     * @return FacturesDQE[] Returns an array of FacturesDQE objects
+    //     * @return Factures[] Returns an array of Factures objects
     //     */
     //    public function findByExampleField($value): array
     //    {
@@ -31,7 +31,7 @@ class FacturesDQERepository extends ServiceEntityRepository
     //        ;
     //    }
 
-    //    public function findOneBySomeField($value): ?FacturesDQE
+    //    public function findOneBySomeField($value): ?Factures
     //    {
     //        return $this->createQueryBuilder('f')
     //            ->andWhere('f.exampleField = :val')

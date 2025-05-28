@@ -28,11 +28,11 @@ final class BPUController extends AbstractController
     public function bpu_list(Request $request, Parametres $parent, BPURepository $bpuRepository, SessionInterface $session): Response
     {
         $session->set('menu', 'bpu');
-        $parametres = $bpuRepository->findByParametre($parent);
+        $parametres = $bpuRepository->findByParent($parent);
 
         $parametre = new BPU();
         // Pré-remplir les actions possibles de cette permission
-        $parametre->setParametre($parent);
+        $parametre->setParent($parent);
 
         $form = $this->createForm(BPUType::class, $parametre);
         $form->handleRequest($request);
@@ -82,7 +82,7 @@ final class BPUController extends AbstractController
             $this->em->flush();
         }
         $this->addFlash('success', 'Suppression effectuée avec succès.');
-        return $this->redirectToRoute('bpu_list', ['parent' => $param->getParametre()->getId() ?? null]);
+        return $this->redirectToRoute('bpu_list', ['parent' => $param->getParent()->getId() ?? null]);
     }
 
     #[Route('/delete-params-selected', name: 'bpu_selected_delete', methods: ['POST'])]

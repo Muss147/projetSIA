@@ -2,13 +2,16 @@
 
 namespace App\Entity;
 
+use App\Entity\DevisBPU;
+use App\Entity\Contrats;
+use App\Mapping\EntityBase;
 use App\Repository\DevisRepository;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
 
 #[ORM\Entity(repositoryClass: DevisRepository::class)]
-class Devis
+class Devis extends EntityBase
 {
     #[ORM\Id]
     #[ORM\GeneratedValue]
@@ -45,6 +48,11 @@ class Devis
     public function getId(): ?int
     {
         return $this->id;
+    }
+
+    public function getEntityLibelle(): ?string
+    {
+        return $this->libelle;
     }
 
     public function getLibelle(): ?string
@@ -115,7 +123,7 @@ class Devis
         return $this->devisBPUs;
     }
 
-    public function addDevisBPUs(DevisBPU $devisBPUs): static
+    public function addDevisBPU(DevisBPU $devisBPUs): static
     {
         if (!$this->devisBPUs->contains($devisBPUs)) {
             $this->devisBPUs->add($devisBPUs);

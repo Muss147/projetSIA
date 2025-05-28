@@ -52,7 +52,7 @@ class BPU extends EntityBase
 
     #[ORM\ManyToOne(inversedBy: 'bpu')]
     #[ORM\JoinColumn(nullable: false)]
-    private ?Parametres $parametre = null;
+    private ?Parametres $parent = null;
 
     #[ORM\Column(length: 255)]
     private ?string $slug = null;
@@ -210,14 +210,14 @@ class BPU extends EntityBase
         return $this;
     }
 
-    public function getParametre(): ?Parametres
+    public function getParent(): ?Parametres
     {
-        return $this->parametre;
+        return $this->parent;
     }
 
-    public function setParametre(?Parametres $parametre): static
+    public function setParent(?Parametres $parent): static
     {
-        $this->parametre = $parametre;
+        $this->parent = $parent;
 
         return $this;
     }

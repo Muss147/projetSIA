@@ -261,7 +261,7 @@
 									<div
 										class="card-body pt-0 pb-5">
 										<!--begin::Form-->
-										{{form_start(edit_form, {'attr': {'id': 'kt_ecommerce_customer_profile', 'class': 'form'}})}}
+										{{form_start(contrat_form, {'attr': {'id': 'kt_ecommerce_customer_profile', 'class': 'form'}})}}
 											<!--begin::Input group-->
 											<div
 												class="fv-row mb-7">
@@ -270,7 +270,7 @@
 												<!--end::Label-->
 
 												<!--begin::Input-->
-												{{form_widget(edit_form.nom, {'attr': {'class': 'form-control form-control-solid', 'placeholder': 'Entrer un nom au contrat'}})}}
+												{{form_widget(contrat_form.nom, {'attr': {'class': 'form-control form-control-solid', 'placeholder': 'Entrer un nom au contrat'}})}}
 											<!--end::Input-->
 											</div>
 											<!--end::Input group-->
@@ -285,7 +285,7 @@
 												<!--end::Label-->
 
 												<!--begin::Input-->
-												{{form_widget(edit_form.typeTravaux, {'attr': {'class': 'form-select form-select-solid', 'data-control': 'select2', 'data-hide-search': 'true', 'data-placeholder': 'Sélectionner un type'}})}}
+												{{form_widget(contrat_form.typeTravaux, {'attr': {'class': 'form-select form-select-solid', 'data-control': 'select2', 'data-hide-search': 'true', 'data-placeholder': 'Sélectionner un type'}})}}
 											<!--end::Input-->
 											</div>
 											<!--end::Input group-->
@@ -309,7 +309,7 @@
 															<span class="path6"></span>
 														</i>
 														<!--begin::Input-->
-														{{form_widget(edit_form.dateDebut, {'attr': {'class': 'form-control form-control-solid kt_datepicker ps-12', 'placeholder': 'Choisir une date'}})}}
+														{{form_widget(contrat_form.dateDebut, {'attr': {'class': 'form-control form-control-solid kt_datepicker ps-12', 'placeholder': 'Choisir une date'}})}}
 														<!--end::Input-->
 													</div>
 												</div>
@@ -332,7 +332,7 @@
 															<span class="path6"></span>
 														</i>
 														<!--begin::Input-->
-														{{form_widget(edit_form.dateFin, {'attr': {'class': 'form-control form-control-solid kt_datepicker ps-12', 'placeholder': 'Choisir une date'}})}}
+														{{form_widget(contrat_form.dateFin, {'attr': {'class': 'form-control form-control-solid kt_datepicker ps-12', 'placeholder': 'Choisir une date'}})}}
 														<!--end::Input-->
 													</div>
 												</div>
@@ -349,7 +349,7 @@
 													<!--end::Label-->
 
 													<!--begin::Input-->
-													{{form_widget(edit_form.montant, {'attr': {'class': 'form-control form-control-solid', 'placeholder': 'Entrer un montant'}})}}
+													{{form_widget(contrat_form.montant, {'attr': {'class': 'form-control form-control-solid', 'placeholder': 'Entrer un montant'}})}}
 													<!--end::Input-->
 												</div>
 												<!--end::Col-->
@@ -361,7 +361,7 @@
 													<!--end::Label-->
 
 													<!--begin::Input-->
-													{{form_widget(edit_form.tauxGarantie, {'attr': {'class': 'form-control form-control-solid', 'placeholder': 'Entrer un pourcentage'}})}}
+													{{form_widget(contrat_form.tauxGarantie, {'attr': {'class': 'form-control form-control-solid', 'placeholder': 'Entrer un pourcentage'}})}}
 													<!--end::Input-->
 												</div>
 												<!--end::Input group-->
@@ -377,7 +377,7 @@
 												<!--end::Label-->
 
 												<!--begin::Input-->
-												{{form_widget(edit_form.chefChantier, {'attr': {'class': 'form-select form-select-solid', 'data-placeholder': 'Sélectionner un chef'}})}}
+												{{form_widget(contrat_form.chefChantier, {'attr': {'class': 'form-select form-select-solid', 'data-placeholder': 'Sélectionner un chef'}})}}
 												<!--end::Input-->
 											</div>
 											<!--end::Input group-->
@@ -390,7 +390,7 @@
 												<!--end::Label-->
 
 												<!--begin::Input-->
-												{{form_widget(edit_form.description, {'attr': {'class': 'form-control form-control-solid', 'placeholder': 'Entrer une description'}})}}
+												{{form_widget(contrat_form.description, {'attr': {'class': 'form-control form-control-solid', 'placeholder': 'Entrer une description'}})}}
 											<!--end::Input-->
 											</div>
 											<!--end::Input group-->
@@ -409,7 +409,7 @@
 												</button>
 												<!--end::Button-->
 											</div>
-										{{form_end(edit_form)}}
+										{{form_end(contrat_form)}}
 										<!--end::Form-->
 									</div>
 									<!--end::Card body-->
@@ -426,50 +426,20 @@
 									<!--begin::Card body-->
 									<div class="card-body p-12">
 										<!--begin::Form-->
-										<form action="" action="" id="kt_invoice_form">
+										{{form_start(devis_form, {'attr': {'id': 'kt_invoice_form'}})}}
 											<!--begin::Wrapper-->
 											<div class="d-flex flex-column align-items-start flex-xxl-row">
 												<!--begin::Input group-->
 												<div class="d-flex align-items-center flex-equal fw-row me-4 order-2" data-bs-toggle="tooltip" data-bs-trigger="hover" title="Spécifier la date d'émission du DQE">
-													<!--begin::Date-->
-													<div class="fs-6 fw-bold text-gray-700 text-nowrap">Date:</div>  
-													<!--end::Date-->                    
-
-													<!--begin::Input-->
-													<div class="position-relative d-flex align-items-center w-150px">
-														<!--begin::Datepicker-->
-														<input class="form-control form-control-transparent fw-bold pe-5" placeholder="Sélectionner unedate" name="invoice_date"/>
-														<!--end::Datepicker-->
-														
-														<!--begin::Icon-->
-														<i class="ki-duotone ki-down fs-4 position-absolute ms-4 end-0"></i>                        <!--end::Icon-->
-													</div>
-													<!--end::Input-->                
-												</div>                
-												<!--end::Input group--> 
-
-												<!--begin::Input group-->
-												<div class="d-flex flex-center flex-equal fw-row text-nowrap order-1 order-xxl-2 me-4" data-bs-toggle="tooltip" data-bs-trigger="hover" title="Enter invoice number">
-													<span class="fs-2x fw-bold text-gray-800">Facture #</span> 
-													<input type="text" class="form-control form-control-flush fw-bold text-muted fs-3 w-125px" value="2021001" placehoder="..."/>
+													<!--begin::Title-->
+													<h2 class="">Dévis Quantitatif et Estimatif</h2>
+													<!--end::Title-->                
 												</div>                
 												<!--end::Input group--> 
 
 												<!--begin::Input group-->
 												<div class="d-flex align-items-center justify-content-end flex-equal order-3 fw-row" data-bs-toggle="tooltip" data-bs-trigger="hover" title="Specify invoice due date">
 													<!--begin::Date-->
-													<div class="fs-6 fw-bold text-gray-700 text-nowrap">Date d'écheance:</div>  
-													<!--end::Date-->                    
-
-													<!--begin::Input-->
-													<div class="position-relative d-flex align-items-center w-150px">
-														<!--begin::Datepicker-->
-														<input class="form-control form-control-transparent fw-bold pe-5" placeholder="Select date" name="invoice_due_date"/>
-														<!--end::Datepicker-->
-														
-														<!--begin::Icon-->
-														<i class="ki-duotone ki-down fs-4 position-absolute end-0 ms-4"></i>                        <!--end::Icon-->
-													</div>
 													<!--end::Input-->                
 												</div>                
 												<!--end::Input group--> 
@@ -486,23 +456,11 @@
 												<div class="row gx-10 mb-5">
 													<!--begin::Col-->
 													<div class="col-lg-6">
-														<label class="form-label fs-6 fw-bold text-gray-700 mb-3">Donneur d'ordre</label>
+														<label class="form-label fs-6 fw-bold text-gray-700 mb-3">Libellé du dévis</label>
 
 														<!--begin::Input group-->
 														<div class="mb-5">
-															<input type="text" class="form-control form-control-solid" placeholder="Nom"/>
-														</div>
-														<!--end::Input group-->
-
-														<!--begin::Input group-->
-														<div class="mb-5">
-															<input type="text" class="form-control form-control-solid" placeholder="Email"/>
-														</div>
-														<!--end::Input group-->
-
-														<!--begin::Input group-->
-														<div class="mb-5">
-															<textarea name="notes" class="form-control form-control-solid" rows="3" placeholder="Who is this invoice from?"></textarea>
+															{{form_widget(devis_form.libelle, {'attr': {'class': 'form-control form-control-solid', 'placeholder': 'Entrer un libelle'}})}}
 														</div>
 														<!--end::Input group-->
 													</div>                
@@ -510,26 +468,25 @@
 
 													<!--begin::Col-->
 													<div class="col-lg-6">
-														<label class="form-label fs-6 fw-bold text-gray-700 mb-3">Fournisseur</label>
+														<label class="form-label fs-6 fw-bold text-gray-700 mb-3">Entête</label>
 
 														<!--begin::Input group-->
 														<div class="mb-5">
-															<input type="text" class="form-control form-control-solid" placeholder="Nom"/>
+															{{form_widget(devis_form.usine, {'attr': {'class': 'form-control form-control-solid', 'placeholder': 'Nom de l\'usine'}})}}
 														</div>
 														<!--end::Input group-->
 
 														<!--begin::Input group-->
 														<div class="mb-5">
-															<input type="text" class="form-control form-control-solid" placeholder="Email"/>
+															{{form_widget(devis_form.ouvrage, {'attr': {'class': 'form-control form-control-solid', 'placeholder': 'Nom de l\ouvrage'}})}}
 														</div>
 														<!--end::Input group-->
-
 														<!--begin::Input group-->
 														<div class="mb-5">
-															<textarea name="notes" class="form-control form-control-solid" rows="3" placeholder="What is this invoice for?"></textarea>
+															{{form_widget(devis_form.typeTravaux, {'attr': {'class': 'form-control form-control-solid', 'placeholder': 'Type de travaux'}})}}
 														</div>
 														<!--end::Input group-->
-													</div>                
+													</div>
 													<!--end::Col--> 
 												</div>                
 												<!--end::Row--> 
@@ -541,41 +498,39 @@
 														<!--begin::Table head-->
 														<thead>
 															<tr class="border-bottom fs-7 fw-bold text-gray-700 text-uppercase">
-																<th class="min-w-300px w-475px">Désignation</th>
+																<th class="min-w-350px w-475px">Désignation</th>
 																<th class="min-w-100px w-100px">QTÉ</th>
-																<th class="min-w-150px w-150px">Prix</th>
-																<th class="min-w-100px w-150px text-end">Total</th>
+																<th class="min-w-100px ps-0 text-end">Prix</th>
+																<th class="min-w-100px ps-0 text-end">Total</th>
 																<th class="min-w-75px w-75px text-end">Action</th>
 															</tr>
 														</thead>
 														<!--end::Table head-->
 
 														<!--begin::Table body-->
-														<tbody>
-															<tr class="border-bottom border-bottom-dashed" data-kt-element="item">
-																<td class="pe-7">                                            
-																	<input type="text" class="form-control form-control-solid mb-2" name="name[]" placeholder="Item name"/>
-
-																	<input type="text" class="form-control form-control-solid" name="description[]" placeholder="Description"/>     
+														<tbody data-kt-element="items" data-prototype="{{ form_widget(devis_form.devisBPUs.vars.prototype)|e('html_attr') }}">
+															{% for devisBPUForm in devis_form.devisBPUs %}
+															{% dump(devisBPUForm.bpu.vars.choices) %}
+															<tr class="border-bottom border-bottom-dashed" data-kt-element="bpu">
+																<td class="pe-4">
+																	{{ form_widget(devisBPUForm.bpu) }}
 																</td>
-
-																<td class="ps-0">                                            
-																	<input type="text" class="form-control form-control-solid" type="number" min="1" name="quantity[]" placeholder="1" value="1" data-kt-element="quantity"/>
+																<td class="ps-0">
+																	{{ form_widget(devisBPUForm.quantite, { attr: {class: 'form-control form-control-solid', 'data-kt-element': 'quantity', placeholder: 'Quantité'}}) }}
 																</td>
-
-																<td>   
-																	<input type="text" class="form-control form-control-solid text-end" name="price[]" placeholder="0.00" value="0.00" data-kt-element="price"/>
+																<td class="pt-8 ps-0 text-end text-nowrap">
+																	<span data-kt-element="price">0.00</span>
 																</td>
-																
-																<td class="pt-8 text-end text-nowrap">
-																	$<span data-kt-element="total">0.00</span>
+																<td class="pt-8 ps-0 text-end text-nowrap">
+																	<span data-kt-element="total">0.00</span>
 																</td>
-
 																<td class="pt-5 text-end">
 																	<button type="button" class="btn btn-sm btn-icon btn-active-color-primary" data-kt-element="remove-item">
-																		<i class="ki-duotone ki-trash fs-3"><span class="path1"></span><span class="path2"></span><span class="path3"></span><span class="path4"></span><span class="path5"></span></i>                                    </button>                             
+																		<i class="ki-duotone ki-trash fs-3"></i>
+																	</button>
 																</td>
-															</tr>          
+															</tr>
+															{% endfor %}
 														</tbody>
 														<!--end::Table body-->
 
@@ -619,21 +574,19 @@
 												<!--begin::Item template-->
 												<table class="table d-none" data-kt-element="item-template">
 													<tr class="border-bottom border-bottom-dashed" data-kt-element="item">
-														<td class="pe-7">                                            
-															<input type="text" class="form-control form-control-solid mb-2" name="name[]" placeholder="Item name"/>
-
-															<input type="text" class="form-control form-control-solid" name="description[]" placeholder="Description"/>     
+														<td class="pe-4">
+															{# {{ form_widget(devis_form.devisBPUs.vars.prototype.bpu) }} #}
 														</td>
 
-														<td class="ps-0">                                            
-															<input type="text" class="form-control form-control-solid" type="number" min="1" name="quantity[]" placeholder="1" data-kt-element="quantity"/>
+														<td class="ps-0">
+															{# {{ form_widget(devis_form.devisBPUs.vars.prototype.quantite, {'attr': {'class': 'form-control form-control-solid', 'placeholder': '1', 'data-kt-element': 'quantity', 'name': '__name__[quantite]'}}) }} #}
 														</td>
 
-														<td>   
-															<input type="text" class="form-control form-control-solid text-end" name="price[]" placeholder="0.00" data-kt-element="price"/>
+														<td class="pt-8 ps-0 text-end">
+															<span data-kt-element="price">0.00</span>
 														</td>
 														
-														<td class="pt-8 text-end">
+														<td class="pt-8 ps-0 text-end">
 															$<span data-kt-element="total">0.00</span>
 														</td>
 
@@ -662,7 +615,7 @@
 												<!--end::Notes--> 
 											</div>   
 											<!--end::Wrapper-->          
-										</form>
+										{{form_end(devis_form)}}
 										<!--end::Form-->
 									</div>
 									<!--end::Card body-->
@@ -2286,7 +2239,6 @@
             if ( !item.id ) {
                 return item.text;
             }
-
             var span = document.createElement('span');
             var imgUrl = item.element.getAttribute('data-kt-select2-user');
             var template = '';
