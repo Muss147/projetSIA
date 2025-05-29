@@ -8,6 +8,7 @@ use App\Mapping\EntityBase;
 use App\Repository\DevisRepository;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
+use Doctrine\DBAL\Types\Types;
 use Doctrine\ORM\Mapping as ORM;
 
 #[ORM\Entity(repositoryClass: DevisRepository::class)]
@@ -37,8 +38,14 @@ class Devis extends EntityBase
     /**
      * @var Collection<int, DevisBPU>
      */
-    #[ORM\OneToMany(targetEntity: DevisBPU::class, mappedBy: 'devis', orphanRemoval: true)]
+    #[ORM\OneToMany(targetEntity: DevisBPU::class, mappedBy: 'devis', cascade: ['persist'], orphanRemoval: true)]
     private Collection $devisBPUs;
+
+    #[ORM\Column(nullable: true)]
+    private ?string $total = null;
+
+    #[ORM\Column(type: Types::TEXT, nullable: true)]
+    private ?string $note = null;
 
     public function __construct()
     {
@@ -133,7 +140,7 @@ class Devis extends EntityBase
         return $this;
     }
 
-    public function removeDevisBPUs(DevisBPU $devisBPUs): static
+    public function removeDevisBPU(DevisBPU $devisBPUs): static
     {
         if ($this->devisBPUs->removeElement($devisBPUs)) {
             // set the owning side to null (unless already changed)
@@ -141,6 +148,30 @@ class Devis extends EntityBase
                 $devisBPUs->setDevis(null);
             }
         }
+
+        return $this;
+    }
+
+    public function getTotal(): ?string
+    {
+        return $this->total;
+    }
+
+    public function setTotal(?string $total): static
+    {
+        $this->total = $total;
+
+        return $this;
+    }
+
+    public function getNote(): ?string
+    {
+        return $this->note;
+    }
+
+    public function setNote(?string $note): static
+    {
+        $this->note = $note;
 
         return $this;
     }

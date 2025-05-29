@@ -2,6 +2,8 @@
 
 namespace App\Form;
 
+use Symfony\Component\Form\Extension\Core\Type\TextType;
+use App\Entity\BPU;
 use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
 use App\Entity\DevisBPU;
 use App\Repository\BPURepository;
@@ -60,10 +62,11 @@ class DevisBPUType extends AbstractType
             }
             $x++;
         }
-        // dd($choices);
 
         $builder
-            ->add('quantite')
+            ->add('quantite', TextType::class, [
+                'label' => false,
+            ])
             ->add('bpu', ChoiceType::class, [
                 'choices' => $choices,
                 'mapped' => false,
@@ -75,12 +78,18 @@ class DevisBPUType extends AbstractType
                     if (is_string($choice) && str_contains($choice, '__disabled__')) {
                         return [
                             'disabled' => true,
-                            'class' => 'fw-bold'
+                            'class' => 'fw-bold',
                         ];
                     }
-                    return [
-                        'data-label' => trim($key),
-                    ];
+                    else {
+                        $bpu = $this->bpurepository->find($choice);
+                        return [
+                            'data-label' => trim($key),
+                            'data-prix' => $bpu->getPrixUnitaireHT(),
+                            'data-unite' => $bpu->getUnite(),
+                            'data-hierarchie' => $bpu->getParent()?->getParent()?->getParent()?->getLibelle(). ' -> '. $bpu->getParent()?->getParent()?->getLibelle(). ' -> '. $bpu->getParent()?->getLibelle()
+                        ];
+                    }
                 },
                 'placeholder' => 'Sélectionner un BPU',
                 'required' => true,

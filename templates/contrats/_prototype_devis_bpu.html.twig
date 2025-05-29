@@ -1,7 +1,15 @@
 {# _prototype_devis_bpu.html.twig (le template de prototype) #}
 <tr data-kt-element="item">
-    <td class="pe-4">{{ form_widget(form.bpu, {'attr': {'class': 'form-select form-select-solid', 'placeholder': 'Sélectionner un BPU'}}) }}</td>
-    <td class="ps-0">{{ form_widget(form.quantite, {'attr': {'class': 'form-control form-control-solid', 'placeholder': 'Quantité', 'data-kt-element': 'quantity'}}) }}</td>
+    <td class="pe-4">
+        <span class="fw-bold text-primary" data-kt-element="hierarchie"></span>
+        {{ form_widget(form.bpu, {'attr': {'class': 'form-select form-select-solid', 'placeholder': 'Sélectionner un BPU'}}) }}
+    </td>
+    <td class="ps-0">
+        <div class="input-group flex-nowrap">
+            {{ form_widget(form.quantite, {'attr': {'value': 1, 'class': 'form-control ps-0 w-50px text-end', 'placeholder': 'Quantité', 'data-kt-element': 'quantity', 'aria-label': 'Quantité', 'aria-describedby': 'basic-addon'}}) }}
+            <span class="input-group-text p-2" data-kt-element="unity" id="basic-addon">?</span>
+        </div>
+    </td>
     <td class="pt-8 ps-0 text-end">
         <span data-kt-element="price">0.00</span>
     </td>
