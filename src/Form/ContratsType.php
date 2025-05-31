@@ -38,6 +38,19 @@ class ContratsType extends AbstractType
                     ;
                 },
             ])
+            ->add('client', EntityType::class, [
+                'class' => Clients::class,
+                'choice_label' => 'nom',
+                'choice_attr' => function ($choice, $key, $value) {
+                    /** @var ChefChantier $choice */
+                    $avatarPath = 'assets/media/svg/avatars/blank.svg';
+                    $avatarUrl = $this->urlGenerator->generate('acceuil', [], UrlGeneratorInterface::ABSOLUTE_URL); // temporaire
+                    $avatarUrl = preg_replace('#/+$#', '', $avatarUrl) . '/' . ltrim($avatarPath, '/');
+                    return [
+                        'data-kt-select2-user' => $avatarUrl,
+                    ];
+                },
+            ])
             ->add('chefChantier', EntityType::class, [
                 'class' => ChefChantier::class,
                 'choice_label' => 'nomComplet',
@@ -53,11 +66,7 @@ class ContratsType extends AbstractType
             ])
         ;
         if ($options['form_type'] === 'completForm') {
-            $builder->add('client', EntityType::class, [
-                    'class' => Clients::class,
-                    'choice_label' => 'id',
-                ])
-                ->add('projet', EntityType::class, [
+            $builder->add('projet', EntityType::class, [
                     'class' => Projets::class,
                     'choice_label' => 'id',
                 ])

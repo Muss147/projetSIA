@@ -59,7 +59,7 @@
 
 							<!--begin::Item-->
 							<li class="breadcrumb-item">
-								Bordereau des Prix Unitaires
+								<a href="{{path('utilitaires_list')}}" class="text-muted text-hover-primary">Utilitaires</a>
 							</li>
 							<!--end::Item-->
 						</ul>
@@ -107,10 +107,7 @@
 							class="card-toolbar">
 							<!--begin::Add customer-->
 							<button class="btn btn-light-primary" data-bs-toggle="modal" data-bs-target="#kt_modal_add_permission">
-								<i class="ki-duotone ki-add-folder fs-3">
-									<span class="path1"></span>
-									<span class="path2"></span>
-								</i>
+								<i class="ki-duotone ki-plus fs-3"></i>
 								Ajouter un(e) {{type}}
 							</button>
 							<!--end::Add customer-->
@@ -137,12 +134,13 @@
 									<th class="text-end min-w-70px">Actions</th>
 								</tr>
 							</thead>
+							{% set icone = random(['save-2', 'receipt-square', 'archive-tick', 'shield-tick', 'setting-2', 'wrench']) %}
 							<tbody class="fw-semibold text-gray-600">
-								{% for param in parametres|filter(p => p.type == type) %}
+								{% for utilitaire in utilitaires|filter(p => p.type == type) %}
 								<tr>
 									<td>
 										<div class="form-check form-check-sm form-check-custom form-check-solid">
-											<input class="form-check-input" type="checkbox" value="{{param.id}}"/>
+											<input class="form-check-input" type="checkbox" value="{{utilitaire.id}}"/>
 										</div>
 									</td>
 									<td>
@@ -151,7 +149,7 @@
 											<!--begin::Thumbnail-->
 											<a href="" class="symbol symbol-50px">
 												<span class="symbol-label">
-													<i class="ki-duotone ki-folder fs-2">
+													<i class="ki-duotone ki-{{icone}} fs-2">
 														<span class="path1"></span>
 														<span class="path2"></span>
 													</i>
@@ -162,18 +160,18 @@
 											<div
 												class="ms-5">
 												<!--begin::Title-->
-												<a href="" class="text-gray-800 text-hover-primary fs-5 fw-bold mb-1" data-kt-ecommerce-category-filter="category_name">{{param.libelle}}</a>
+												<a href="" class="text-gray-800 text-hover-primary fs-5 fw-bold mb-1" data-kt-ecommerce-category-filter="category_name">{{utilitaire.libelle}}</a>
 												<!--end::Title-->
 
 												<!--begin::Description-->
-												{{ param.description ? '<div class="text-muted fs-7 fw-bold">'~ param.description|raw ~'</div>' : '' }}
+												{{ utilitaire.description ? '<div class="text-muted fs-7 fw-bold">'~ utilitaire.description|raw ~'</div>' : '<div class="text-muted small fw-bold">Ici une courte description pour l\'élément...</div>' }}
 												<!--end::Description-->
 											</div>
 										</div>
 									</td>
 									<td>
 										<!--begin::Badges-->
-										<div class="badge badge-light-success">{{param.type}}</div>
+										<div class="badge badge-light-success">{{utilitaire.type}}</div>
 										<!--end::Badges-->
 									</td>
 									<td class="text-end">
@@ -193,8 +191,8 @@
 											<!--end::Menu item-->
 
 											<!--begin::Menu item-->
-											<form class="menu-item px-3" method="post" action="{{ path('param_delete', {'id': param.id}) }}">
-												<input type="hidden" name="_token" value="{{ csrf_token('delete' ~ param.id) }}">
+											<form class="menu-item px-3" method="post" action="{{ path('utilitaire_delete', {'utilitaire': utilitaire.id}) }}">
+												<input type="hidden" name="_token" value="{{ csrf_token('delete' ~ utilitaire.id) }}">
 												<a href="#" class="menu-link px-3" data-kt-ecommerce-category-filter="delete_row">
 													Supprimer
 												</a>
@@ -214,7 +212,7 @@
 				</div>
 				<!--end::Category-->
 				<!--begin::Modals-->
-				<!--begin::Modal - Add parametres-->
+				<!--begin::Modal - Add utilitaires-->
 				<div
 					class="modal fade" id="kt_modal_add_permission" tabindex="-1" aria-hidden="true"> <!--begin::Modal dialog-->
 					<div
@@ -230,7 +228,7 @@
 								<!--end::Modal title-->
 
 								<!--begin::Close-->
-								<div class="btn btn-icon btn-sm btn-active-icon-primary" data-kt-parametres-modal-action="close">
+								<div class="btn btn-icon btn-sm btn-active-icon-primary" data-kt-utilitaires-modal-action="close">
 									<i class="ki-duotone ki-cross fs-1">
 										<span class="path1"></span>
 										<span class="path2"></span>
@@ -275,11 +273,11 @@
 
 									<!--begin::Actions-->
 									<div class="text-center pt-15">
-										<button type="reset" class="btn btn-light me-3" data-kt-parametres-modal-action="cancel">
+										<button type="reset" class="btn btn-light me-3" data-kt-utilitaires-modal-action="cancel">
 											Annuler
 										</button>
 
-										<button type="submit" class="btn btn-primary" data-kt-parametres-modal-action="submit">
+										<button type="submit" class="btn btn-primary" data-kt-utilitaires-modal-action="submit">
 											<span class="indicator-label">
 												Soumettre
 											</span>
@@ -299,8 +297,8 @@
 					</div>
 					<!--end::Modal dialog-->
 				</div>
-				<!--end::Modal - Add parametres-->
-				<!--begin::Modal - Update parametres-->
+				<!--end::Modal - Add utilitaires-->
+				<!--begin::Modal - Update utilitaires-->
 				<div
 					class="modal fade" id="kt_modal_update_permission" tabindex="-1" aria-hidden="true">
 					<!--begin::Modal dialog-->
@@ -317,7 +315,7 @@
 								<!--end::Modal title-->
 
 								<!--begin::Close-->
-								<div class="btn btn-icon btn-sm btn-active-icon-primary" data-kt-parametres-modal-action="close">
+								<div class="btn btn-icon btn-sm btn-active-icon-primary" data-kt-utilitaires-modal-action="close">
 									<i class="ki-duotone ki-cross fs-1">
 										<span class="path1"></span>
 										<span class="path2"></span>
@@ -342,8 +340,8 @@
 
 										<!--begin::Input-->
 										<input
-											class="form-control form-control-solid" placeholder="Entrer le libellé de la permission" name="param_libelle"/>
-										<input type="hidden" name="param_id">
+											class="form-control form-control-solid" placeholder="Entrer le libellé de la permission" name="utilitaire_libelle"/>
+										<input type="hidden" name="utilitaire_id">
 									<!--end::Input-->
 									</div>
 									<!--end::Input group-->
@@ -356,18 +354,18 @@
 
 										<!--begin::Input-->
 										<input
-											class="form-control form-control-solid" placeholder="Entrer une description" name="param_description"/>
+											class="form-control form-control-solid" placeholder="Entrer une description" name="utilitaire_description"/>
 									<!--end::Input-->
 									</div>
 									<!--end::Input group-->
 
 									<!--begin::Actions-->
 									<div class="text-center pt-15">
-										<button type="reset" class="btn btn-light me-3" data-kt-parametres-modal-action="cancel">
+										<button type="reset" class="btn btn-light me-3" data-kt-utilitaires-modal-action="cancel">
 											Annuler
 										</button>
 
-										<button type="submit" class="btn btn-primary" data-kt-parametres-modal-action="submit">
+										<button type="submit" class="btn btn-primary" data-kt-utilitaires-modal-action="submit">
 											<span class="indicator-label">
 												Soumettre
 											</span>
@@ -387,7 +385,7 @@
 					</div>
 					<!--end::Modal dialog-->
 				</div>
-				<!--end::Modal - Update parametres-->
+				<!--end::Modal - Update utilitaires-->
 				<!--end::Modals-->
 			</div>
 			<!--end::Content container-->
@@ -403,10 +401,10 @@
 
 <script type="text/javascript">
 
-	const parametres = {{ parametres|map(p => {
+	const utilitaires = {{ utilitaires|map(p => {
 		id: p.id,
 		libelle: p.libelle,
-		enfants: p.enfants|map(enfant => {
+		enfants: p.children|map(enfant => {
 			id: enfant.id,
 			libelle: enfant.libelle
         })
@@ -415,8 +413,8 @@
 	const editModal = document.getElementById('kt_modal_update_permission');
 
 	editModal.addEventListener('show.bs.modal', event => {
-		const paramId = event.relatedTarget.attributes['data-bs-ident'].value;
-		const permission = parametres.find(c => c.id == paramId);
+		const utilitaireId = event.relatedTarget.attributes['data-bs-ident'].value;
+		const permission = utilitaires.find(c => c.id == utilitaireId);
 		if (!permission) return;
 
 		editModal.querySelector('input[name="permission_id"]').value = permission.id;

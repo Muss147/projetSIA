@@ -2,13 +2,14 @@
 
 namespace App\Controller;
 
+use App\Repository\UtilitairesRepository;
+use App\Repository\ChefChantierRepository;
+use App\Repository\ClientsRepository;
 use App\Form\DevisType;
-use App\Form\ContratsType;
 use Doctrine\ORM\EntityManagerInterface;
 use App\Repository\ContratsRepository;
 use App\Entity\Contrats;
 use App\Entity\Devis;
-use App\Entity\DevisBPU;
 use App\Repository\BPURepository;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
@@ -32,7 +33,7 @@ final class ContratsController extends AbstractController
         ]);
     }
 
-    #[Route('/{contrat}', name: 'contrat_details')]
+    #[Route('/details/{contrat}', name: 'contrat_details')]
     public function details(Request $request, Contrats $contrat, SessionInterface $session, BPURepository $bpuRepository): Response
     {
         // Définition du menu actif
@@ -70,5 +71,56 @@ final class ContratsController extends AbstractController
             'contrat' => $contrat,
             'devis_form' => $devis_form,
         ]);
+    }
+
+    #[Route('/projet-{projet}/edit', name: 'contrat_edit_wProjet')]
+    #[Route('/edit', name: 'contrat_edit')]
+    public function edit(Request $request, ContratsRepository $contratsRepository, ClientsRepository $clientsRepository, ChefChantierRepository $chefChantierRepository, UtilitairesRepository $utilitairesRepository): Response
+    {
+        $projet = $request->get('projet');
+        // dd($request);
+        if ($request->getMethod('POST') && $contrat = $contratsRepository->find($request->get('contrat_id'))) {
+            $nom = $request->get('contrat_nom') ?? null;
+            $type = $utilitairesRepository->find($request->get('contrat_typeContrat'));
+            $client = $clientsRepository->find($request->get('contrat_client'));
+            $chef = $chefChantierRepository->find($request->get('contrat_chefChantier'));
+            $debut = new \DateTime($request->get('contrat_dateDebut')) ?? null;
+            $fin = new \DateTime($request->get('contrat_dateFin')) ?? null;
+            $montant = $request->get('contrat_montant') ?? null;
+            $taux = $request->get('contrat_tauxGarantie') ?? null;
+            $description = $request->get('contrat_description') ?? null;
+
+            $contrat->setNom($nom)
+                ->setTypeTravaux($type)
+                ->setClient($client)
+                ->setChefChantier($chef)
+                ->setDateDebut($debut)
+                ->setDateFin($fin)
+                ->setMontant($montant)
+                ->setTauxGarantie($taux)
+                ->setDescription($description)
+            ;
+            $contrat->updatedTimestamps();
+            $contrat->updatedUserstamps($this->getUser());
+
+            $this->em->persist($contrat);
+            $this->em->flush();
+
+            $this->addFlash('success', 'Modification effectuée avec succès.');
+            // return $this->redirect($request->headers->get('referer'));
+        }
+        
+        if ($projet) return $this->redirectToRoute('projet_contrats', ['projet' => $projet], Response::HTTP_SEE_OTHER);
+        else return $this->redirectToRoute('contrats_list');
+    }
+
+    #[Route('/{contrat}/delete', name: 'contrat_delete', methods: ['POST'])]
+    public function delete(Request $request, Contrats $contrat, EntityManagerInterface $em): Response
+    {
+        if ($this->isCsrfTokenValid('delete'.$contrat->getId(), $request->getPayload()->getString('_token'))) {
+            $contrat->remove($this->getUser());
+            $em->flush();
+        }
+        return $this->redirectToRoute('contrats_list', [], Response::HTTP_SEE_OTHER);
     }
 }

@@ -87,107 +87,6 @@
 				<!--begin::Layout-->
 				<div
 					class="d-flex flex-column flex-xl-row">
-					<!--begin::Sidebar-->
-					<div
-						class="flex-column flex-lg-row-auto w-100 w-xl-250px mb-10">
-
-						<!--begin::Card-->
-						<div
-							class="card mb-5 mb-xl-8">
-							<!--begin::Card body-->
-							<div
-								class="card-body pt-15">
-								<!--begin::Summary-->
-								<div
-									class="d-flex flex-center flex-column mb-5">
-									<!--begin::Avatar-->
-									<div class="symbol symbol-100px symbol-circle mb-7">
-										<img src="{{asset('assets/media/svg/avatars/blank.svg')}}" alt="image"/>
-									</div>
-									<!--end::Avatar-->
-
-									<!--begin::Name-->
-									<a href="#" class="fs-3 text-gray-800 text-hover-primary fw-bold mb-1">
-										{{contrat.chefChantier.nomComplet}}
-									</a>
-									<!--end::Name-->
-									{% if contrat.chefChantier.email %}
-									<!--begin::Email-->
-									<a href="#" class="fs-5 fw-semibold text-muted text-hover-primary mb-6">
-										{{contrat.chefChantier.email|default(null)}}
-									</a>
-									<!--end::Email-->
-									{% endif %}
-									<!--begin::Email-->
-									<a href="#" class="fs-5 fw-semibold text-muted text-hover-primary mb-6">
-										{{contrat.chefChantier.telephone}}
-									</a>
-									<!--end::Email-->
-								</div>
-								<!--end::Summary-->
-
-								<!--begin::Details toggle-->
-								<div class="d-flex flex-stack fs-4 py-3">
-									<div class="fw-bold">
-										Details
-									</div>
-
-									<!--begin::Badge-->
-									<div class="badge badge-light-info d-inline">Chef de chantier</div>
-									<!--begin::Badge-->
-								</div>
-								<!--end::Details toggle-->
-
-								<div class="separator separator-dashed my-3"></div>
-
-								<!--begin::Details content-->
-								<div
-									class="pb-5 fs-6">
-									<!--begin::Details item-->
-									<div class="fw-bold mt-5">ID contrat</div>
-									<div class="text-gray-600">CTR-{{ '%05d'|format(contrat.id) }}</div>
-									<!--begin::Details item-->
-									<!--begin::Details item-->
-									<div class="fw-bold mt-5">Nom du contrat</div>
-									<div class="text-gray-600">
-										<a href="#" class="text-gray-600 text-hover-primary">{{contrat.nom}}</a>
-									</div>
-									<!--begin::Details item-->
-									<!--begin::Details item-->
-									<div class="fw-bold mt-5">Type de contrat</div>
-									<div class="text-gray-600">
-										<a href="#" class="text-gray-600 text-hover-primary">{{contrat.typeTravaux.libelle}}</a>
-									</div>
-									<!--begin::Details item-->
-									<!--begin::Details item-->
-									<div class="fw-bold mt-5">Date de début</div>
-									<div class="text-gray-600">{{contrat.dateDebut|date('d M Y')}}</div>
-									<!--begin::Details item-->
-									<!--begin::Details item-->
-									<div class="fw-bold mt-5">Date de fin</div>
-									<div class="text-gray-600">{{contrat.dateFin|date('d M Y')}}</div>
-									<!--begin::Details item-->
-									<!--begin::Details item-->
-									<div class="fw-bold mt-5">Montant</div>
-									<div class="text-gray-600">
-										<a href="" class="text-gray-600 text-hover-primary">{{contrat.montant}}</a>
-									</div>
-									<!--begin::Details item-->
-									<!--begin::Details item-->
-									<div class="fw-bold mt-5">Taux</div>
-									<div class="text-gray-600">
-										<a href="" class="text-gray-600 text-hover-primary">{{contrat.taux|default(null)}}</a>
-									</div>
-									<!--begin::Details item-->
-								</div>
-								<!--end::Details content-->
-							</div>
-							<!--end::Card body-->
-						</div>
-						<!--end::Card-->
-					</div>
-					<!--end::Sidebar-->
-
 					<!--begin::Content-->
 					<div
 						class="flex-lg-row-fluid ms-lg-15">
@@ -355,6 +254,34 @@
 											<!--begin::Col-->
 											<div class="col-lg-8 fv-row">
 												<span class="fw-semibold text-gray-800 fs-6">{{contrat.typeTravaux.libelle}}</span>                         
+											</div>
+											<!--end::Col-->
+										</div>
+										<!--end::Input group-->
+
+										<!--begin::Input group-->
+										<div class="row mb-7">
+											<!--begin::Label-->
+											<label class="col-lg-4 fw-semibold text-muted">Chef de chantier</label>
+											<!--end::Label-->
+
+											<!--begin::Col-->
+											<div class="col-lg-8 fv-row">
+												<span class="fw-semibold text-gray-800 fs-6">{{contrat.chefChantier.nomComplet}}</span>                         
+											</div>
+											<!--end::Col-->
+										</div>
+										<!--end::Input group-->
+
+										<!--begin::Input group-->
+										<div class="row mb-7">
+											<!--begin::Label-->
+											<label class="col-lg-4 fw-semibold text-muted">Contact</label>
+											<!--end::Label-->
+
+											<!--begin::Col-->
+											<div class="col-lg-8 fv-row">
+												<span class="fw-semibold text-gray-800 fs-6">{{contrat.chefChantier.telephone}} {{contrat.chefChantier.email ? '/'~ contrat.chefChantier.email : null}}</span>                         
 											</div>
 											<!--end::Col-->
 										</div>

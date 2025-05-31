@@ -4,13 +4,14 @@ namespace App\Controller;
 
 use App\Entity\Projets;
 use App\Entity\Contrats;
-use App\Form\ProjetsForm;
 use App\Form\ProjetsType;
 use App\Form\ContratsType;
 use App\Repository\ProjetsRepository;
-use App\Repository\ContratsRepository;
 use Doctrine\ORM\EntityManagerInterface;
 use App\Repository\BusinessUnitsRepository;
+use App\Repository\ChefChantierRepository;
+use App\Repository\ClientsRepository;
+use App\Repository\UtilitairesRepository;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Attribute\Route;
@@ -84,7 +85,7 @@ final class ProjetsController extends AbstractController
     }
 
     #[Route('/{projet}/contrats', name: 'projet_contrats')]
-    public function contrats(Request $request, Projets $projet, SessionInterface $session): Response
+    public function contrats(Request $request, Projets $projet, SessionInterface $session, ClientsRepository $clientsRepository, ChefChantierRepository $chefChantierRepository, UtilitairesRepository $utilitairesRepository): Response
     {
         // Définition du menu actif
         $session->set('menu', 'projets_manage');
@@ -109,7 +110,10 @@ final class ProjetsController extends AbstractController
         }
         return $this->render('projets/details_contrats.html.twig', [
             'projet' => $projet,
-            'new_form' => $form
+            'new_form' => $form,
+            'clients' => $clientsRepository->findAll(),
+            'chefsChantier' => $chefChantierRepository->findAll(),
+            'typesTravaux' => $utilitairesRepository->findByType('Type de contrat'),
         ]);
     }
 
@@ -150,5 +154,15 @@ final class ProjetsController extends AbstractController
         return $this->render('projets/details_documents.html.twig', [
             'projet' => $projet,
         ]);
+    }
+
+    #[Route('/{projet}/delete', name: 'projet_delete', methods: ['POST'])]
+    public function delete(Request $request, Projets $projet, EntityManagerInterface $em): Response
+    {
+        if ($this->isCsrfTokenValid('delete'.$projet->getId(), $request->getPayload()->getString('_token'))) {
+            $projet->remove($this->getUser());
+            $em->flush();
+        }
+        return $this->redirectToRoute('projets_list', [], Response::HTTP_SEE_OTHER);
     }
 }
