@@ -50,6 +50,11 @@ class ContratsType extends AbstractType
                         'data-kt-select2-user' => $avatarUrl,
                     ];
                 },
+                'query_builder' => function (EntityRepository $er) use ($options) {
+                    return $er->createQueryBuilder('c')
+                        ->andWhere('c.deletedAt IS NULL')
+                    ;
+                },
             ])
             ->add('chefChantier', EntityType::class, [
                 'class' => ChefChantier::class,
@@ -67,10 +72,14 @@ class ContratsType extends AbstractType
         ;
         if ($options['form_type'] === 'completForm') {
             $builder->add('projet', EntityType::class, [
-                    'class' => Projets::class,
-                    'choice_label' => 'id',
-                ])
-            ;
+                'class' => Projets::class,
+                'choice_label' => 'libelle',
+                'query_builder' => function (EntityRepository $er) use ($options) {
+                    return $er->createQueryBuilder('p')
+                        ->andWhere('p.deletedAt IS NULL')
+                    ;
+                },
+            ]);
         }
     }
 

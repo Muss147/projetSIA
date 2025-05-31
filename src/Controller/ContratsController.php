@@ -2,6 +2,8 @@
 
 namespace App\Controller;
 
+use App\Repository\ProjetsRepository;
+use App\Form\ContratsType;
 use App\Repository\UtilitairesRepository;
 use App\Repository\ChefChantierRepository;
 use App\Repository\ClientsRepository;
@@ -26,19 +28,44 @@ final class ContratsController extends AbstractController
     ) {}
 
     #[Route('/', name: 'contrats_list')]
-    public function index(): Response
+    public function index(Request $request, ContratsRepository $contratsRepository, SessionInterface $session, ClientsRepository $clientsRepository, ProjetsRepository $projetsRepository, ChefChantierRepository $chefChantierRepository, UtilitairesRepository $utilitairesRepository): Response
     {
-        return $this->render('contrats/index.html.twig', [
-            'controller_name' => 'ContratsController',
+        $session->set('menu', 'projets_manage');
+        $session->set('subMenu', 'contrats');
+
+        $contrat = new Contrats();
+        $form = $this->createForm(ContratsType::class, $contrat, ['form_type' => 'completForm']);
+        $form->handleRequest($request);
+
+        if ($form->isSubmitted() && $form->isValid()) {
+
+            $contrat->updatedTimestamps();
+            $contrat->updatedUserstamps($this->getUser());
+
+            $this->em->persist($contrat);
+            $this->em->flush();
+
+            $this->addFlash('success', 'Projet ajouté avec succès.');
+            return $this->redirectToRoute('contrats_list', [], Response::HTTP_SEE_OTHER);
+        }
+        return $this->render('contrats/liste.html.twig', [
+            'contrats' => $contratsRepository->findAll(),
+            'new_form' => $form,
+            'clients' => $clientsRepository->findAll(),
+            'projets' => $projetsRepository->findAll(),
+            'chefsChantier' => $chefChantierRepository->findAll(),
+            'typesTravaux' => $utilitairesRepository->findByType('Type de contrat')
         ]);
     }
 
     #[Route('/details/{contrat}', name: 'contrat_details')]
     public function details(Request $request, Contrats $contrat, SessionInterface $session, BPURepository $bpuRepository): Response
     {
+        $url = $request->headers->get('referer');
         // Définition du menu actif
         $session->set('menu', 'projets_manage');
         $session->set('subMenu', 'projets');
+        if (!preg_match('#^/projets/\d+/contrats#', $url)) $session->set('subMenu', 'contrats');
 
         // Formulaire de Devis
         $devis = $contrat->getDevis() ?? new Devis();

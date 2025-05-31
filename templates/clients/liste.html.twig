@@ -8,79 +8,85 @@
 
 {% block body %}
 	<div
-		class="content d-flex flex-column flex-column-fluid " id="kt_content">
+		class="d-flex flex-column flex-column-fluid">
 
 		<!--begin::Toolbar-->
 		<div
-			class="toolbar d-flex flex-stack mb-3 mb-lg-5" id="kt_toolbar">
-			<!--begin::Container-->
+			id="kt_app_toolbar" class="app-toolbar  py-3 py-lg-6 ">
+
+			<!--begin::Toolbar container-->
 			<div
-				id="kt_toolbar_container" class=" container-fluid  d-flex flex-stack flex-wrap">
+				id="kt_app_toolbar_container" class="app-container container-xxl">
+				
+				<div class="bg-primary-o h-150px rounded d-flex flex-stack p-5 p-md-10">
+					<!--begin::Page title-->
+					<div
+						class="page-title d-flex flex-column justify-content-center flex-wrap me-3 ">
+						<!--begin::Title-->
+						<h1 class="page-heading d-flex text-gray-100 fw-bold fs-3 flex-column justify-content-center my-0">
+							Liste des client
+						</h1>
+						<!--end::Title-->
 
 
-				<!--begin::Page title-->
-				<div
-					class="page-title d-flex flex-column me-5 py-2">
-					<!--begin::Title-->
-					<h1 class="d-flex flex-column text-gray-900 fw-bold fs-3 mb-0">
-						Liste des clients
-					</h1>
-					<!--end::Title-->
+						<!--begin::Breadcrumb-->
+						<ul
+							class="breadcrumb breadcrumb-separatorless fw-semibold fs-7 my-0 pt-1">
+							<!--begin::Item-->
+							<li class="breadcrumb-item text-muted">
+								<a href="{{path('acceuil')}}" class="text-muted text-hover-primary">
+									Accueil
+								</a>
+							</li>
+							<!--end::Item-->
+							<!--begin::Item-->
+							<li class="breadcrumb-item">
+								<span class="bullet bg-gray-500 w-5px h-2px"></span>
+							</li>
+							<!--end::Item-->
 
-					<!--begin::Breadcrumb-->
-					<ul
-						class="breadcrumb breadcrumb-separatorless fw-semibold fs-7 pt-1">
-						<!--begin::Item-->
-						<li class="breadcrumb-item text-muted">
-							<a href="{{path('quick_start')}}" class="text-muted text-hover-primary">
-								Accueil
-							</a>
-						</li>
-						<!--end::Item-->
-						<!--begin::Item-->
-						<li class="breadcrumb-item">
-							<span class="bullet bg-gray-200 w-5px h-2px"></span>
-						</li>
-						<!--end::Item-->
+							<!--begin::Item-->
+							<li class="breadcrumb-item text-muted">
+								App
+							</li>
+							<!--end::Item-->
 
-						<!--begin::Item-->
-						<li class="breadcrumb-item text-muted">
-							Clients
-						</li>
-						<!--end::Item-->
-						<!--begin::Item-->
-						<li class="breadcrumb-item">
-							<span class="bullet bg-gray-200 w-5px h-2px"></span>
-						</li>
-						<!--end::Item-->
+							<!--begin::Item-->
+							<li class="breadcrumb-item">
+								<span class="bullet bg-gray-200 w-5px h-2px"></span>
+							</li>
+							<!--end::Item-->
 
-						<!--begin::Item-->
-						<li class="breadcrumb-item text-gray-900">
-							Liste des clients
-						</li>
-						<!--end::Item-->
-
-					</ul>
-					<!--end::Breadcrumb-->
+							<!--begin::Item-->
+							<li class="breadcrumb-item">
+								<a href="" class="text-muted text-hover-primary">Clients</a>
+							</li>
+							<!--end::Item-->
+						</ul>
+						<!--end::Breadcrumb-->
+					</div>
+					<!--end::Page title-->
 				</div>
-				<!--end::Page title-->
 			</div>
-			<!--end::Container-->
+			<!--end::Toolbar container-->
 		</div>
 		<!--end::Toolbar-->
 
-		<!--begin::Post-->
+		<!--begin::Content-->
 		<div
-			class="post d-flex flex-column-fluid" id="kt_post">
-			<!--begin::Container-->
+			id="kt_app_content" class="app-content  flex-column-fluid ">
+
+
+			<!--begin::Content container-->
 			<div
-				id="kt_content_container" class=" container-xxl ">
-				<!--begin::Card-->
+				id="kt_app_content_container" class="app-container  container-xxl ">
+
+				<!--begin::Category-->
 				<div
-					class="card">
+					class="card card-flush">
 					<!--begin::Card header-->
 					<div
-						class="card-header border-0 pt-6">
+						class="card-header align-items-center py-5 gap-2 gap-md-5">
 						<!--begin::Card title-->
 						<div
 							class="card-title">
@@ -102,19 +108,6 @@
 							<!--begin::Toolbar-->
 							<div
 								class="d-flex justify-content-end" data-kt-customer-table-toolbar="base">
-								<!--begin::Filter-->
-								<div
-									class="w-150px me-3">
-									<!--begin::Select2-->
-									<select class="form-select form-select-solid" data-control="select2" data-hide-search="true" data-placeholder="Catégories" data-kt-ecommerce-order-filter="status">
-										<option></option>
-										<option value="all">Tout</option>
-										{% for categ in categories %}<option value="{{categ.libelle}}">{{categ.libelle}}</option>{% endfor %}
-									</select>
-									<!--end::Select2-->
-								</div>
-								<!--end::Filter-->
-
 								<!--begin::Export-->
 								<button type="button" class="btn btn-light-primary me-3" data-bs-toggle="modal" data-bs-target="#kt_customers_export_modal">
 									<i class="ki-duotone ki-exit-up fs-2">
@@ -165,8 +158,8 @@
 									</th>
 									<th class="min-w-125px">Client</th>
 									<th class="min-w-125px">Téléphone</th>
-									<th class="min-w-125px">Catégorie</th>
-									<th class="min-w-125px">Adresse</th>
+									<th class="min-w-125px">Reg. comm.</th>
+									<th class="min-w-125px">Reg. impos.</th>
 									<th class="min-w-125px">Date</th>
 									<th class="text-end min-w-70px">Actions</th>
 								</tr>
@@ -180,18 +173,18 @@
 										</div>
 									</td>
 									<td>
-										<a href="{{path('detail_client', {'id': client.id})}}" class="text-gray-800 text-hover-primary mb-1">{{client.nomComplet}}</a>
+										<a href="{{path('detail_client', {'client': client.id})}}" class="text-gray-800 text-hover-primary mb-1">{{client.nom}}</a>
 									</td>
 									<td>
 										<a href="#" class="text-gray-600 text-hover-primary mb-1">{{client.telephone}}</a>
 									</td>
 									<td>
-										<!--begin::Badges-->
-										<div class="badge badge-light-{{client.categorie.couleur}}">{{client.categorie.libelle}}</div>
-										<!--end::Badges-->
+										{{client.registreCommerce}}
 									</td>
 									<td>
-										{{client.quartier ? client.quartier ~', ' : ''}}{{client.commune ? client.commune ~', ' : ''}}{{client.ville}}
+										<!--begin::Badges-->
+										<div class="badge badge-light-secondary">{{client.regimeImposition}}</div>
+										<!--end::Badges-->
 									</td>
 									<td>
 										{{ client.createdAt ? client.createdAt|date('d-m-Y H:i:s') : '' }}
@@ -206,7 +199,7 @@
 											class="menu menu-sub menu-sub-dropdown menu-column menu-rounded menu-gray-600 menu-state-bg-light-primary fw-semibold fs-7 w-125px py-4" data-kt-menu="true">
 											<!--begin::Menu item-->
 											<div class="menu-item px-3">
-												<a href="{{path('detail_client', {'id': client.id})}}" class="menu-link px-3">
+												<a href="{{path('detail_client', {'client': client.id})}}" class="menu-link px-3">
 													Voir
 												</a>
 											</div>
@@ -274,11 +267,11 @@
 										<div
 											class="fv-row mb-7">
 											<!--begin::Label-->
-											<label class="required fs-6 fw-semibold mb-2">Nom complet</label>
+											<label class="required fs-6 fw-semibold mb-2">Nom ou raison sociale</label>
 											<!--end::Label-->
 
 											<!--begin::Input-->
-											{{form_widget(form_client.nomComplet, {'attr': {'class': 'form-control form-control-solid', 'placeholder': 'Nom et Prénom'}})}}
+											{{form_widget(form_client.nom, {'attr': {'class': 'form-control form-control-solid', 'placeholder': 'Nom ou raison sociale'}})}}
 											<!--end::Input-->
 										</div>
 										<!--end::Input group-->
@@ -327,78 +320,14 @@
 										<div
 											class="fv-row mb-7">
 											<!--begin::Label-->
-											<label class="required fs-6 fw-semibold mb-2">Catégorie</label>
+											<label class="required fs-6 fw-semibold mb-2">Boite postale</label>
 											<!--end::Label-->
 
 											<!--begin::Input-->
-											{{form_widget(form_client.categorie, {'attr': {'class': 'form-select form-select-solid', 'data-control': 'select2', 'data-placeholder': 'Sélectionner une catégorie...', 'data-hide-search': 'true'}})}}
+											{{form_widget(form_client.boitePostale, {'attr': {'class': 'form-control form-control-solid', 'placeholder': 'Entrer l\'adresse postale'}})}}
 											<!--end::Input-->
 										</div>
 										<!--end::Input group-->
-
-										{# 1. Génère le prototype avec échappement propre #}
-										{% set prototype %}
-										<div class='enfant-item form-group row mb-5'>
-											<div class='col-md-5'>
-												<label class='form-label'>Enfant :</label>
-												{{ form_widget(form_client.enfants.vars.prototype.nomComplet, {'attr': {'class': 'form-control mb-2 mb-md-0', 'placeholder': 'Nom complet'}}) }}
-											</div>
-											<div class='col-md-2'>
-												<label class='form-label'>Âge :</label>
-												{{ form_widget(form_client.enfants.vars.prototype.age, {'attr': {'class': 'form-control mb-2 mb-md-0', 'placeholder': 'Âge'}}) }}
-											</div>
-											<div class='col-md-2'>
-												<label class='form-label'>Taille (cm) :</label>
-												{{ form_widget(form_client.enfants.vars.prototype.taille, {'attr': {'class': 'form-control mb-2 mb-md-0', 'placeholder': 'Taille'}}) }}
-											</div>
-											<div class='col-md-2'>
-												<label class='form-label'>Pointure :</label>
-												{{ form_widget(form_client.enfants.vars.prototype.pointure, {'attr': {'class': 'form-control mb-2 mb-md-0', 'placeholder': 'Pointure'}}) }}
-											</div>
-											<div class='col-md-1'>
-												<a href='javascript:;' class='btn btn-sm btn-light-danger remove-enfant mt-3 mt-md-8'>
-											<i class="ki-duotone ki-trash fs-5"><span class="path1"></span><span class="path2"></span><span class="path3"></span><span class="path4"></span><span class="path5"></span></i>
-												</a>
-											</div>
-										</div>
-										{% endset %}
-
-										<div class="enfants_div mb-7">
-											<div id="enfants-wrapper" data-prototype="{{ prototype|e('html_attr') }}">
-												{# {% for enfantForm in form_client.enfants %}
-													<div class="enfant-item form-group row">
-														<div class="col-md-5">
-															<label class="form-label">Enfant :</label>
-															{{ form_widget(enfantForm.nomComplet, {'attr': {'class': 'form-control mb-2 mb-md-0', 'placeholder': 'Nom complet'}}) }}
-														</div>
-														<div class="col-md-3">
-															<label class="form-label">Âge :</label>
-															<div class="input-group mb-5">
-																{{ form_widget(enfantForm.age, {'attr': {'class': 'form-control mb-2 mb-md-0', 'placeholder': 'Nom complet', 'aria-describedby': 'child_age'}}) }}
-																<span class="input-group-text" id="child_age">an(s)</span>
-															</div>
-														</div>
-														<div class="col-md-3">
-															<label class="form-label">Pointure :</label>
-															{{ form_widget(enfantForm.pointure, {'attr': {'class': 'form-control mb-2 mb-md-0', 'placeholder': 'Pointure'}}) }}
-														</div>
-														<div class="col-md-1">
-															<a href="javascript:;" class="btn btn-sm btn-light-danger remove-enfant mt-3 mt-md-8">
-																<i class="ki-duotone ki-trash fs-5"><span class="path1"></span><span class="path2"></span><span class="path3"></span><span class="path4"></span><span class="path5"></span></i>
-															</a>
-														</div>
-													</div>
-												{% endfor %} #}
-											</div>
-											<!--begin::Form group-->
-											<div class="form-group mt-5">
-												<a href="javascript:;" id="add-enfant" class="btn btn-light-primary">
-													<i class="ki-duotone ki-plus fs-3"></i>
-													Ajouter un enfant
-												</a>
-											</div>
-											<!--end::Form group-->
-										</div>
 
 										<!--begin::Billing toggle-->
 										<div class="fw-bold fs-3 rotate collapsible mb-7 collapsed" data-bs-toggle="collapse" href="#kt_modal_add_customer_billing_info" role="button" aria-expanded="false" aria-controls="kt_customer_view_details">
@@ -416,11 +345,11 @@
 											<div
 												class="d-flex flex-column mb-7 fv-row">
 												<!--begin::Label-->
-												<label class="fs-6 fw-semibold mb-2">Quartier</label>
+												<label class="fs-6 fw-semibold mb-2">Adresse</label>
 												<!--end::Label-->
 
 												<!--begin::Input-->
-												{{form_widget(form_client.quartier, {'attr': {'class': 'form-control form-control-solid', 'placeholder': ''}})}}
+												{{form_widget(form_client.adresse, {'attr': {'class': 'form-control form-control-solid', 'placeholder': 'Entrer l\'adresse complète'}})}}
 											<!--end::Input-->
 											</div>
 											<!--end::Input group-->
@@ -569,39 +498,6 @@
 									</div>
 									<!--end::Input group-->
 
-									<!--begin::Row-->
-									<div
-										class="row fv-row mb-15">
-										<!--begin::Label-->
-										<label class="fs-5 fw-semibold form-label mb-5">Catégorie(s) :</label>
-										<!--end::Label-->
-
-										<!--begin::Radio group-->
-										<div
-											class="d-flex flex-column">
-											<!--begin::Radio button-->
-											<label class="form-check form-check-custom form-check-sm form-check-solid mb-3">
-												<input class="form-check-input" type="checkbox" value="1" checked="checked" name="categorie_type"/>
-												<span class="form-check-label text-gray-600 fw-semibold">
-													Tout
-												</span>
-											</label>
-											<!--end::Radio button-->
-											{% for categorie in categories %}
-											<!--begin::Radio button-->
-											<label class="form-check form-check-custom form-check-sm form-check-solid mb-3">
-												<input class="form-check-input" type="checkbox" value="{{categorie.id}}" name="categorie_type"/>
-												<span class="form-check-label text-gray-600 fw-semibold">
-													{{categorie.libelle}}
-												</span>
-											</label>
-											<!--end::Radio button-->
-											{% endfor %}
-										</div>
-										<!--end::Input group-->
-									</div>
-									<!--end::Row-->
-
 									<!--begin::Actions-->
 									<div class="text-center">
 										<button type="reset" id="kt_customers_export_cancel" class="btn btn-light me-3">
@@ -628,7 +524,8 @@
 					</div>
 					<!--end::Modal dialog-->
 				</div>
-				<!--end::Modal - New Card--><!--end::Modals--></div>
+				<!--end::Modal - New Card--><!--end::Modals-->
+			</div>
 			<!--end::Container-->
 		</div>
 		<!--end::Post-->
