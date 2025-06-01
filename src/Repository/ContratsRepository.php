@@ -16,20 +16,18 @@ class ContratsRepository extends ServiceEntityRepository
         parent::__construct($registry, Contrats::class);
     }
 
-    //    /**
-    //     * @return Contrats[] Returns an array of Contrats objects
-    //     */
-    //    public function findByExampleField($value): array
-    //    {
-    //        return $this->createQueryBuilder('c')
-    //            ->andWhere('c.exampleField = :val')
-    //            ->setParameter('val', $value)
-    //            ->orderBy('c.id', 'ASC')
-    //            ->setMaxResults(10)
-    //            ->getQuery()
-    //            ->getResult()
-    //        ;
-    //    }
+       /**
+        * @return Contrats[] Returns an array of Contrats objects
+        */
+       public function findAll(): array
+       {
+           return $this->createQueryBuilder('c')
+                ->andWhere('c.deletedAt IS NULL')
+                ->orderBy('c.id', 'ASC')
+                ->getQuery()
+                ->getResult()
+           ;
+       }
 
     //    public function findOneBySomeField($value): ?Contrats
     //    {

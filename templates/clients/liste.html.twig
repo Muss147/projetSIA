@@ -2,7 +2,7 @@
 
 {% block title %}Liste des clients{% endblock %}
 
-{% block stylesheet %}
+{% block stylesheets %}
 <link href="{{asset('assets/plugins/custom/datatables/datatables.bundle.css')}}" rel="stylesheet" type="text/css"/> 
 {% endblock %}
 
@@ -276,6 +276,32 @@
 										</div>
 										<!--end::Input group-->
 
+										<!--begin::Input group-->
+										<div
+											class="fv-row mb-7">
+											<!--begin::Label-->
+											<label class="required fs-6 fw-semibold mb-2">Registre de commerce</label>
+											<!--end::Label-->
+
+											<!--begin::Input-->
+											{{form_widget(form_client.registreCommerce, {'attr': {'class': 'form-control form-control-solid', 'placeholder': 'Entrer le registre de commerce'}})}}
+											<!--end::Input-->
+										</div>
+										<!--end::Input group-->
+
+										<!--begin::Input group-->
+										<div
+											class="fv-row mb-7">
+											<!--begin::Label-->
+											<label class="required fs-6 fw-semibold mb-2">Régime d'imposition</label>
+											<!--end::Label-->
+
+											<!--begin::Input-->
+											{{form_widget(form_client.regimeImposition, {'attr': {'class': 'form-control form-control-solid', 'placeholder': 'Entrer le régime d\'imposition'}})}}
+											<!--end::Input-->
+										</div>
+										<!--end::Input group-->
+
 										<div
 											class="row g-9 mb-7">
 											<!--begin::Col-->
@@ -315,6 +341,19 @@
 											</div>
 											<!--end::Input group-->
 										</div>
+
+										<!--begin::Input group-->
+										<div
+											class="fv-row mb-7">
+											<!--begin::Label-->
+											<label class="fs-6 fw-semibold mb-2">Site internet</label>
+											<!--end::Label-->
+
+											<!--begin::Input-->
+											{{form_widget(form_client.siteWeb, {'attr': {'class': 'form-control form-control-solid', 'placeholder': 'Entrer l\'adresse du site internet'}})}}
+											<!--end::Input-->
+										</div>
+										<!--end::Input group-->
 
 										<!--begin::Input group-->
 										<div
@@ -532,35 +571,13 @@
 	</div>
 {% endblock %}
 
-{% block scripts %}
+{% block javascripts %}
 <script src="{{asset('assets/plugins/custom/datatables/datatables.bundle.js')}}"></script>
-<script src="{{asset('assets/plugins/custom/formrepeater/formrepeater.bundle.js')}}"></script>
 
 <script src="{{asset('assets/js/custom/apps/ecommerce/customers/listing/listing.js')}}"></script>
 <script src="{{asset('assets/js/custom/apps/ecommerce/customers/listing/add.js')}}"></script>
 <script src="{{asset('assets/js/custom/apps/ecommerce/customers/listing/export.js')}}"></script>
 <script type="text/javascript">
-	document.addEventListener('DOMContentLoaded', function () {
-        const wrapper = document.getElementById('enfants-wrapper');
-        const addButton = document.getElementById('add-enfant');
-
-        let index = wrapper.querySelectorAll('.enfant-item').length;
-
-        addButton.addEventListener('click', function () {
-            const prototype = wrapper.dataset.prototype.replace(/__name__/g, index);
-            const newElement = document.createElement('div');
-            newElement.innerHTML = prototype;
-            wrapper.appendChild(newElement);
-            index++;
-        });
-
-        wrapper.addEventListener('click', function (e) {
-            if (e.target.closest('.remove-enfant')) {
-                e.target.closest('.enfant-item').remove();
-            }
-        });
-    });
-
 	{% for type, messages in app.flashes %}
 		{% for message in messages %}
 		Swal.fire({

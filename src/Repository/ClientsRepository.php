@@ -16,20 +16,18 @@ class ClientsRepository extends ServiceEntityRepository
         parent::__construct($registry, Clients::class);
     }
 
-    //    /**
-    //     * @return Clients[] Returns an array of Clients objects
-    //     */
-    //    public function findByExampleField($value): array
-    //    {
-    //        return $this->createQueryBuilder('c')
-    //            ->andWhere('c.exampleField = :val')
-    //            ->setParameter('val', $value)
-    //            ->orderBy('c.id', 'ASC')
-    //            ->setMaxResults(10)
-    //            ->getQuery()
-    //            ->getResult()
-    //        ;
-    //    }
+       /**
+        * @return Clients[] Returns an array of Clients objects
+        */
+       public function findAll(): array
+       {
+           return $this->createQueryBuilder('c')
+                ->andWhere('c.deletedAt IS NULL')
+                ->orderBy('c.id', 'ASC')
+                ->getQuery()
+                ->getResult()
+           ;
+       }
 
     //    public function findOneBySomeField($value): ?Clients
     //    {

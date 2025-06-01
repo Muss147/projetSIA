@@ -16,20 +16,21 @@ class UtilitairesRepository extends ServiceEntityRepository
         parent::__construct($registry, Utilitaires::class);
     }
 
-    //    /**
-    //     * @return Utilitaires[] Returns an array of Utilitaires objects
-    //     */
-    //    public function findByExampleField($value): array
-    //    {
-    //        return $this->createQueryBuilder('u')
-    //            ->andWhere('u.exampleField = :val')
-    //            ->setParameter('val', $value)
-    //            ->orderBy('u.id', 'ASC')
-    //            ->setMaxResults(10)
-    //            ->getQuery()
-    //            ->getResult()
-    //        ;
-    //    }
+       /**
+        * @return Utilitaires[] Returns an array of Utilitaires objects
+        */
+       public function findByType($value): array
+       {
+           return $this->createQueryBuilder('u')
+               ->andWhere('u.type = :val')
+               ->setParameter('val', $value)
+                ->andWhere('u.deletedAt IS NULL')
+                ->orderBy('u.id', 'DESC')
+            //    ->setMaxResults(10)
+               ->getQuery()
+               ->getResult()
+           ;
+       }
 
     //    public function findOneBySomeField($value): ?Utilitaires
     //    {

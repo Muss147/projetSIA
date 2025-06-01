@@ -16,20 +16,18 @@ class DevisRepository extends ServiceEntityRepository
         parent::__construct($registry, Devis::class);
     }
 
-//    /**
-//     * @return Devis[] Returns an array of Devis objects
-//     */
-//    public function findByExampleField($value): array
-//    {
-//        return $this->createQueryBuilder('d')
-//            ->andWhere('d.exampleField = :val')
-//            ->setParameter('val', $value)
-//            ->orderBy('d.id', 'ASC')
-//            ->setMaxResults(10)
-//            ->getQuery()
-//            ->getResult()
-//        ;
-//    }
+   /**
+    * @return Devis[] Returns an array of Devis objects
+    */
+    public function findAll(): array
+    {
+        return $this->createQueryBuilder('d')
+            ->andWhere('d.deletedAt IS NULL')
+            ->orderBy('d.id', 'ASC')
+            ->getQuery()
+            ->getResult()
+        ;
+    }
 
 //    public function findOneBySomeField($value): ?Devis
 //    {

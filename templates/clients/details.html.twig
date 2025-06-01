@@ -1,6 +1,6 @@
 {% extends "layout.html.twig" %}
 
-{% block stylesheet %}
+{% block stylesheets %}
 <link href="{{asset('assets/plugins/custom/datatables/datatables.bundle.css')}}" rel="stylesheet" type="text/css"/>
 {% endblock %}
 
@@ -148,9 +148,27 @@
 											<div class="text-gray-600">ID-{{client.id}}</div>
 											<!--begin::Details item-->
 											<!--begin::Details item-->
+											<div class="fw-bold mt-5">Régistre de commerce</div>
+											<div class="text-gray-600">
+												<span class="text-gray-600">{{client.registreCommerce|default('')}}</span>
+											</div>
+											<!--begin::Details item-->
+											<!--begin::Details item-->
+											<div class="fw-bold mt-5">Regime d'imposition</div>
+											<div class="text-gray-600">
+												<span class="text-gray-600">{{client.regimeImposition|default('')}}</span>
+											</div>
+											<!--begin::Details item-->
+											<!--begin::Details item-->
 											<div class="fw-bold mt-5">Email</div>
 											<div class="text-gray-600">
 												<a href="mailto:{{client.email|default('')}}" class="text-gray-600 text-hover-primary">{{client.email|default('')}}</a>
+											</div>
+											<!--begin::Details item-->
+											<!--begin::Details item-->
+											<div class="fw-bold mt-5">Téléphone</div>
+											<div class="text-gray-600">
+												<a href="tel:{{client.telephone|default('')}}" class="text-gray-600 text-hover-primary">{{client.telephone|default('')}}</a>
 											</div>
 											<!--begin::Details item-->
 											<!--begin::Details item-->
@@ -186,9 +204,9 @@
 									<!--end:::Tab item-->
 
 									<!--begin:::Tab item-->
-									{# <li class="nav-item">
-										<a class="nav-link text-active-primary pb-4" data-bs-toggle="tab" href="#kt_ecommerce_customer_advanced">Advanced Settings</a>
-									</li> #}
+									<li class="nav-item">
+										<a class="nav-link text-active-primary pb-4" data-bs-toggle="tab" href="#kt_ecommerce_customer_advanced">Projets</a>
+									</li>
 									<!--end:::Tab item-->
 								</ul>
 								<!--end:::Tabs-->
@@ -262,7 +280,6 @@
 											</div>
 										</div>
 
-
 										<!--begin::Card-->
 										<div
 											class="card pt-4 mb-6 mb-xl-9">
@@ -284,7 +301,7 @@
 												<table class="table align-middle table-row-dashed gy-5" id="kt_table_customers_payment">
 													<thead class="border-bottom border-gray-200 fs-7 fw-bold">
 														<tr class="text-start text-muted text-uppercase gs-0">
-															<th class="min-w-100px">No. contrat</th>
+															<th class="min-w-100px">Contrat</th>
 															<th>Status</th>
 															<th>Montant</th>
 															<th class="min-w-100px">Projet</th>
@@ -295,13 +312,13 @@
 														{% for contrat in client.contrats %}
 														<tr>
 															<td>
-																<a href="{{path('contrat_details', {contrat: contrat.id})}}" class="text-gray-600 text-hover-primary mb-1">#14492</a>
+																<a href="{{path('contrat_details', {contrat: contrat.id})}}" class="text-gray-600 text-hover-primary mb-1">{{contrat.nom}}</a>
 															</td>
 															<td>
 																<span class="badge badge-light-success">{{contrat.statut}}</span>
 															</td>
 															<td>
-																{{contrat.montant}}
+																{{contrat.montant|number_format(0, ',', ' ')}}
 															</td>
 															<td>
 																{{contrat.projet.nom}}
@@ -516,7 +533,7 @@
 													<div
 														class="fv-row mb-7">
 														<!--begin::Label-->
-														<label class="required fs-6 fw-semibold mb-2">Site internet</label>
+														<label class="fs-6 fw-semibold mb-2">Site internet</label>
 														<!--end::Label-->
 
 														<!--begin::Input-->
@@ -529,7 +546,7 @@
 													<div
 														class="fv-row mb-7">
 														<!--begin::Label-->
-														<label class="required fs-6 fw-semibold mb-2">Boite postale</label>
+														<label class="fs-6 fw-semibold mb-2">Boite postale</label>
 														<!--end::Label-->
 
 														<!--begin::Input-->
@@ -634,33 +651,125 @@
 									<!--end:::Tab pane-->
 
 									<!--begin:::Tab pane-->
-									{# <div
+									<div
 										class="tab-pane fade" id="kt_ecommerce_customer_advanced" role="tabpanel">
 										<!--begin::Card-->
-										<div
-											class="card pt-4 mb-6 mb-xl-9">
-											<!--begin::Card header-->
-											<div
-												class="card-header border-0">
-												<!--begin::Card title-->
+										<div class="card pt-4 mb-6 mb-xl-9">
+											<!--begin::Header-->
+											<div class="card-header">
+												<!--begin::Title-->
 												<div class="card-title">
-													<h2>Security Details</h2>
+													<h2>Liste des projets impliqués</h2>
 												</div>
-												<!--end::Card title-->
+												<!--end::Title-->
+
+												<!--begin::Toolbar-->
+												<div class="card-toolbar">
+													<!--begin::Tab nav-->
+													<ul class="nav nav-stretch fs-5 fw-semibold nav-line-tabs nav-line-tabs-2x border-transparent" role="tablist">
+														<li class="nav-item" role="presentation">
+															<a class="nav-link text-active-primary active" data-bs-toggle="tab" role="tab" href="#kt_customer_view_statement_1">
+																Tout
+															</a>
+														</li>
+
+														{% set annees = [ "now"|date("Y"), "now"|date("Y") - 1, "now"|date("Y") - 2 ] %}
+														{% for index, annee in annees %}
+															{% set projetsAnnee = client.projets|filter(c => c.dateDebut|date("Y") == annee) %}
+															{% if projetsAnnee is not empty %}
+														<li class="nav-item" role="presentation">
+															<a class="nav-link text-active-primary ms-3" data-bs-toggle="tab" role="tab" href="#kt_customer_view_statement_{{index + 2}}">
+																{{ annee == "now"|date("Y") ? 'Cette année' : annee }}
+															</a>
+														</li>
+															{% endif %}
+														{% endfor %}
+													</ul>
+													<!--end::Tab nav-->
+												</div>
+												<!--end::Toolbar-->
 											</div>
-											<!--end::Card header-->
+											<!--end::Header-->
 
 											<!--begin::Card body-->
-											<div
-												class="card-body pt-0 pb-5">
-												<!--begin::Table wrapper-->
-												
-												<!--end::Table wrapper-->
+											<div class="card-body pb-5">
+												<!--begin::Tab Content-->
+												<div id="kt_customer_view_statement_tab_content" class="tab-content">
+													<!--begin::Tab panel-->
+													<div id="kt_customer_view_statement_1" class="py-0 tab-pane fade show active" role="tabpanel">
+														<!--begin::Table-->
+														<table id="kt_customer_view_statement_table_1" class="table align-middle table-row-dashed fs-6 text-gray-600 fw-semibold gy-4">
+															<thead class="border-bottom border-gray-200">
+																<tr class="text-start text-muted fw-bold fs-7 text-uppercase gs-0">
+																	<th class="w-125px">Date</th>
+																	<th class="w-100px">Projet</th>
+																	<th class="w-300px">Secteur</th>
+																	<th class="w-100px">Montant</th>
+																	<th class="w-100px text-end pe-7">Facture</th>
+																</tr>
+															</thead>
+															<tbody>
+																{% for projet in client.projets %}
+																<tr>
+																	<td>{{projet.createdAt|date('d M, Y')}}</td>
+																	<td><a href="{{path('projet_resume', {projet: projet.id})}}" class="text-gray-600 text-hover-primary">{{projet.nom}}</a></td>
+																	<td>{{projet.secteurActivite.libelle}}</td>
+																	{% set totalMontant = projet.contrats|reduce((carry, contrat) => carry + contrat.montant, 0) %}
+																	<td class="text-success">{{ totalMontant|number_format(0, ',', ' ') }}</td>
+																	<td class="text-end">
+																		<button class="btn btn-sm btn-light btn-active-light-primary">Télécharger</button>
+																	</td>
+																</tr>
+																{% endfor %}
+															</tbody>
+														</table>
+														<!--end::Table-->
+													</div>
+													<!--end::Tab panel-->
+													<!--begin::Tab panel-->
+													{% set annees = [ "now"|date("Y"), "now"|date("Y") - 1, "now"|date("Y") - 2 ] %}
+													{% for index, annee in annees %}
+														{% set projetsAnnee = client.projets|filter(c => c.dateDebut|date("Y") == annee) %}
+														{% if projetsAnnee is not empty %}
+													<div id="kt_customer_view_statement_{{index + 2}}" class="py-0 tab-pane fade" role="tabpanel">
+														<!--begin::Table-->
+														<table id="kt_customer_view_statement_table_{{index + 2}}" class="table align-middle table-row-dashed fs-6 text-gray-600 fw-semibold gy-4">
+															<thead class="border-bottom border-gray-200">
+																<tr class="text-start text-muted fw-bold fs-7 text-uppercase gs-0">
+																	<th class="w-125px">Date</th>
+																	<th class="w-100px">Projet</th>
+																	<th class="w-300px">Secteur</th>
+																	<th class="w-100px">Montant</th>
+																	<th class="w-100px text-end pe-7">Facture</th>
+																</tr>
+															</thead>
+															<tbody>
+																{% for projet in projetsAnnee %}
+																<tr>
+																	<td>{{projet.createdAt|date('d M, Y')}}</td>
+																	<td><a href="{{path('projet_resume', {projet: projet.id})}}" class="text-gray-600 text-hover-primary">{{projet.nom}}</a></td>
+																	<td>{{projet.secteurActivite.libelle}}</td>
+																	{% set totalMontant = projet.contrats|reduce((carry, contrat) => carry + contrat.montant, 0) %}
+																	<td class="text-success">{{ totalMontant|number_format(0, ',', ' ') }}</td>
+																	<td class="text-end">
+																		<button class="btn btn-sm btn-light btn-active-light-primary">Télécharger</button>
+																	</td>
+																</tr>
+																{% endfor %}
+															</tbody>
+														</table>
+														<!--end::Table-->
+													</div>
+														{% endif %}
+													{% endfor %}
+													<!--end::Tab panel-->
+												</div>
+												<!--end::Tab Content-->
 											</div>
 											<!--end::Card body-->
 										</div>
 										<!--end::Card-->
-									</div> #}
+									</div>
 									<!--end:::Tab pane-->
 								</div>
 								<!--end:::Tab content-->
@@ -670,182 +779,6 @@
 						<!--end::Layout-->
 
 						<!--begin::Modals-->
-						<!--begin::Modal - Update Enfant-->
-						<div
-							class="modal fade" id="kt_modal_update_address" tabindex="-1" aria-hidden="true"> <!--begin::Modal dialog-->
-							<div
-								class="modal-dialog modal-dialog-centered mw-650px">
-								<!--begin::Modal content-->
-								<div
-									class="modal-content">
-									<!--begin::Form-->
-									<form
-									class="form" action="" method="POST" id="kt_modal_update_address_form">
-										<!--begin::Modal header-->
-										<div
-											class="modal-header" id="kt_modal_update_address_header">
-											<!--begin::Modal title-->
-											<h2 class="fw-bold">Modifier un enfant</h2>
-											<!--end::Modal title-->
-
-											<!--begin::Close-->
-											<div id="kt_modal_update_address_close" class="btn btn-icon btn-sm btn-active-icon-primary">
-												<i class="ki-duotone ki-cross fs-1">
-													<span class="path1"></span>
-													<span class="path2"></span>
-												</i>
-											</div>
-											<!--end::Close-->
-										</div>
-										<!--end::Modal header-->
-
-										<!--begin::Modal body-->
-										<div
-											class="modal-body py-10 px-lg-17">
-											<!--begin::Input group-->
-											<div
-												class="d-flex flex-column mb-7 fv-row">
-												<!--begin::Label-->
-												<label class="fs-6 fw-semibold mb-2 required">Nom complet</label>
-												<!--end::Label-->
-
-												<!--begin::Input-->
-												<input
-												class="form-control form-control-solid" placeholder="" name="enfant_nom" value=""/>
-												<input type="hidden" name="enfant_id">
-											<!--end::Input-->
-											</div>
-											<!--end::Input group-->
-
-											<!--begin::Input wrapper-->
-											<div class="mb-10">
-												<!--begin::Label-->
-												<label class="fs-6 fw-semibold mb-2">
-													Âge de l'enfant
-
-													<span class="m2-1" data-bs-toggle="tooltip" title="Choisir l'âge selon le nombre de mois ou d'années">
-														<i class="ki-duotone ki-information fs-7"><span class="path1"></span><span class="path2"></span><span class="path3"></span></i>
-													</span>
-												</label>
-												<!--end::Label-->
-
-												<!--begin::Slider-->
-												<div class="d-flex flex-column text-center">
-													<div class="d-flex align-items-start justify-content-center mb-7">
-														<span class="fw-bold fs-3x" id="kt_modal_update_enfant_age_label"></span>
-													</div>
-													<div id="kt_modal_update_enfant_age_slider" class="noUi-sm"></div>
-												</div>
-												<!--end::Slider-->
-												<input type="hidden" id="enfant_age" name="enfant_age">
-											</div>
-											<!--end::Input wrapper-->
-
-											<!--begin::Input group-->
-											<div
-												class="row g-9 mb-7">
-												<!--begin::Col-->
-												<div
-													class="col-md-6 fv-row">
-													<!--begin::Label-->
-													<label class="fs-6 fw-semibold mb-2">Taille</label>
-													<!--end::Label-->
-													
-													<!--begin::Dialer-->
-													<div class="position-relative"
-														data-kt-dialer="true"
-														data-kt-dialer-min="0"
-														data-kt-dialer-max="2"
-														data-kt-dialer-step="0.10"
-														data-kt-dialer-suffix="cm"
-														data-kt-dialer-decimals="2">
-
-														<!--begin::Decrease control-->
-														<button type="button" class="btn btn-icon btn-active-color-gray-700 position-absolute translate-middle-y top-50 start-0" data-kt-dialer-control="decrease">
-															<i class="ki-duotone ki-minus-square fs-2"><span class="path1"></span><span class="path2"></span></i>
-														</button>
-														<!--end::Decrease control-->
-
-														<!--begin::Input control-->
-														<input type="text" class="form-control form-control-solid border-0 ps-12" data-kt-dialer-control="input" placeholder="Amount" name="enfant_taille" readonly value="1.20" />
-														<!--end::Input control-->
-
-														<!--begin::Increase control-->
-														<button type="button" class="btn btn-icon btn-active-color-gray-700 position-absolute translate-middle-y top-50 end-0" data-kt-dialer-control="increase">
-															<i class="ki-duotone ki-plus-square fs-2"><span class="path1"></span><span class="path2"></span><span class="path3"></span></i>
-														</button>
-														<!--end::Increase control-->
-													</div>
-													<!--end::Dialer-->
-												</div>
-												<!--end::Col-->
-
-												<!--begin::Col-->
-												<div
-													class="col-md-6 fv-row">
-													<!--begin::Label-->
-													<label class="fs-6 fw-semibold mb-2">Pointure</label>
-													<!--end::Label-->
-													
-													<!--begin::Dialer-->
-													<div class="position-relative"
-														data-kt-dialer="true"
-														data-kt-dialer-min="1"
-														data-kt-dialer-max="45"
-														data-kt-dialer-step="1">
-
-														<!--begin::Decrease control-->
-														<button type="button" class="btn btn-icon btn-active-color-gray-700 position-absolute translate-middle-y top-50 start-0" data-kt-dialer-control="decrease">
-															<i class="ki-duotone ki-minus-square fs-2"><span class="path1"></span><span class="path2"></span></i>
-														</button>
-														<!--end::Decrease control-->
-
-														<!--begin::Input control-->
-														<input type="text" class="form-control form-control-solid border-0 ps-12" data-kt-dialer-control="input" placeholder="Amount" name="enfant_pointure" readonly value="1" />
-														<!--end::Input control-->
-
-														<!--begin::Increase control-->
-														<button type="button" class="btn btn-icon btn-active-color-gray-700 position-absolute translate-middle-y top-50 end-0" data-kt-dialer-control="increase">
-															<i class="ki-duotone ki-plus-square fs-2"><span class="path1"></span><span class="path2"></span><span class="path3"></span></i>
-														</button>
-														<!--end::Increase control-->
-													</div>
-													<!--end::Dialer-->
-												</div>
-												<!--end::Col-->
-											</div>
-											<!--end::Input group-->
-										</div>
-										<!--end::Modal body-->
-
-										<!--begin::Modal footer-->
-										<div
-											class="modal-footer flex-center">
-											<!--begin::Button-->
-											<button type="reset" id="kt_modal_update_address_cancel" class="btn btn-light me-3">
-												Annuler
-											</button>
-											<!--end::Button-->
-
-											<!--begin::Button-->
-											<button type="submit" id="kt_modal_update_address_submit" class="btn btn-primary">
-												<span class="indicator-label">
-													Soumettre
-												</span>
-												<span class="indicator-progress">
-													Veuillez patienter...
-													<span class="spinner-border spinner-border-sm align-middle ms-2"></span>
-												</span>
-											</button>
-											<!--end::Button-->
-										</div>
-										<!--end::Modal footer-->
-									</form>
-									<!--end::Form-->
-								</div>
-							</div>
-						</div>
-						<!--end::Modal - Update Enfant-->
 						<!--end::Modals-->
 					</div>
 					<!--end::Container-->
@@ -859,96 +792,12 @@
 	</div>
 {% endblock %}
 
-{% block scripts %}
+{% block javascripts %}
 <script src="{{asset('assets/plugins/custom/datatables/datatables.bundle.js')}}"></script>
-
-<script src="{{asset('assets/js/custom/apps/ecommerce/customers/details/transaction-history.js')}}"></script>
-<script src="{{asset('assets/js/custom/apps/ecommerce/customers/details/add-address.js')}}"></script>
-<script src="{{asset('assets/js/custom/apps/ecommerce/customers/details/update-address.js')}}"></script>
-<script src="{{asset('assets/js/custom/apps/ecommerce/customers/details/delete-address.js')}}"></script>
 <script src="{{asset('assets/js/custom/apps/ecommerce/customers/details/update-profile.js')}}"></script>
+<script src="{{asset('assets/js/custom/apps/customers/view/statement.js')}}"></script>
 
 <script type="text/javascript">
-    const ageSlider = (defaultValue, budgetSlider, budgetValue, hiddenField) => {
-        noUiSlider.create(budgetSlider, {
-            start: [defaultValue],
-            connect: true,
-            range: {
-                min: 1,
-                max: 216
-            }
-        });
-
-        budgetSlider.noUiSlider.on("update", function (values, handle) {
-            const value = Math.round(values[handle]);
-            let displayValue = '';
-
-            if (value < 12) {
-                displayValue = value + ' mois';
-            } else {
-                const years = Math.round(value / 12);
-                displayValue = `${years} an${years > 1 ? 's' : ''}`;
-            }
-
-            budgetValue.innerHTML = displayValue;
-            // Mise à jour champ caché en mois
-            hiddenField.value = displayValue;
-        });
-    }
-
-    ageSlider(6,
-        document.querySelector("#kt_modal_create_enfant_age_slider"),
-        document.querySelector("#kt_modal_create_enfant_age_label"),
-        document.querySelector("#enfants_age")
-    );
-
-    ageSlider(6,
-        document.querySelector("#kt_modal_update_enfant_age_slider"),
-        document.querySelector("#kt_modal_update_enfant_age_label"),
-        document.querySelector("#enfant_age")
-    );
-    const enfants = {{ client.enfants|map(c => {
-        id: c.id,
-        nom: c.nom,
-        age: c.age,
-        taille: c.taille,
-        pointure: c.pointure
-    })|json_encode|raw }};
-
-    const editModal = document.getElementById('kt_modal_update_address');
-    function convertirAge(age) {
-        age = age.toString().toLowerCase().trim();
-
-        if (age.includes('an')) {
-            // Extrait le nombre et multiplie par 12
-            const nombre = parseInt(age);
-            return nombre * 12;
-        } else if (age.includes('mois')) {
-            // Extrait le nombre tel quel
-            const nombre = parseInt(age);
-            return nombre;
-        } else {
-            // Si aucun mot clé, on suppose que c’est en années
-            const nombre = parseInt(age);
-            return nombre * 12;
-        }
-    }
-    editModal.addEventListener('show.bs.modal', event => {
-        const paramId = event.relatedTarget.attributes['data-bs-ident'].value;
-        const enfant = enfants.find(c => c.id == paramId);
-        var clickSlider = document.querySelector("#kt_modal_update_enfant_age_slider");
-
-        if (!enfant) return;
-
-        editModal.querySelector('input[name="enfant_id"]').value = enfant.id;
-        editModal.querySelector('input[name="enfant_nom"]').value = enfant.nom;
-        editModal.querySelector('input[name="enfant_age"]').value = enfant.age;
-        editModal.querySelector('input[name="enfant_taille"]').value = enfant.taille;
-        editModal.querySelector('input[name="enfant_pointure"]').value = enfant.pointure;
-
-        clickSlider.noUiSlider.set(convertirAge(enfant.age));
-    });
-
     {% for type, messages in app.flashes %}
         {% for message in messages %}
         Swal.fire({

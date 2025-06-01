@@ -26,7 +26,7 @@ class ParametresRepository extends ServiceEntityRepository
                ->setParameter('val', $value)
                 ->andWhere('p.deletedAt IS NULL')
                 ->orderBy('p.id', 'DESC')
-               ->setMaxResults(10)
+            //    ->setMaxResults(10)
                ->getQuery()
                ->getResult()
            ;

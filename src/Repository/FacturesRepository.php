@@ -16,20 +16,18 @@ class FacturesRepository extends ServiceEntityRepository
         parent::__construct($registry, Factures::class);
     }
 
-    //    /**
-    //     * @return Factures[] Returns an array of Factures objects
-    //     */
-    //    public function findByExampleField($value): array
-    //    {
-    //        return $this->createQueryBuilder('f')
-    //            ->andWhere('f.exampleField = :val')
-    //            ->setParameter('val', $value)
-    //            ->orderBy('f.id', 'ASC')
-    //            ->setMaxResults(10)
-    //            ->getQuery()
-    //            ->getResult()
-    //        ;
-    //    }
+       /**
+        * @return Factures[] Returns an array of Factures objects
+        */
+       public function findAll(): array
+       {
+           return $this->createQueryBuilder('f')
+                ->andWhere('f.deletedAt IS NULL')
+                ->orderBy('f.id', 'ASC')
+                ->getQuery()
+                ->getResult()
+           ;
+       }
 
     //    public function findOneBySomeField($value): ?Factures
     //    {
